@@ -40,6 +40,12 @@
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/camelcase": "off",
     "react/prop-types": "off",
+    "camelcase": [
+      0,
+      {
+        "properties": "always"
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",

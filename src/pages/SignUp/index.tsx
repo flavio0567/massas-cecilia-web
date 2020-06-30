@@ -5,7 +5,7 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import api from '../../services/api';
 
 import { useToast } from '../../hooks/toast';
@@ -80,7 +80,7 @@ const SignUp: React.FC = () => {
         });
       }
     },
-    [addToast],
+    [addToast, history],
   );
 
   return (
@@ -117,10 +117,10 @@ const SignUp: React.FC = () => {
             <Button type="submit">Confirmar</Button>
           </Form>
 
-          <a href="/">
+          <Link to="/">
             <FiLogOut />
             Retornar ao logon
-          </a>
+          </Link>
         </AnimationContainer>
       </Content>
     </Container>

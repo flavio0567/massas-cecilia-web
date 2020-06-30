@@ -1,12 +1,11 @@
-import React, { useCallback, useRef } from 'react';
-import { FiLogIn, FiPhone, FiLock } from 'react-icons/fi';
+import React, { useCallback, useRef, useState } from 'react';
+import { FiLogOut, FiMail } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -17,45 +16,42 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 import { Container, Content, AnimationContainer, Background } from './styles';
+import api from '../../services/api';
 
-interface SignInFormData {
-  mobile: number;
-  password: string;
+interface ForgotPasswordFormData {
+  email: string;
 }
 
-const SignIn: React.FC = () => {
+const ForgotPassword: React.FC = () => {
+  const [loading, setLoading] = useState(false);
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
-    async (data: SignInFormData) => {
+    async (data: ForgotPasswordFormData) => {
       try {
+        setLoading(true);
+
         formRef.current?.setErrors({});
 
         const schema = Yup.object().shape({
           mobile: Yup.string().min(10, 'Informe o número do celular com ddd.'),
-          password: Yup.string().min(
-            6,
-            'Senha obrigatória, mínimo 6 caracteres.',
-          ),
         });
 
         await schema.validate(data, {
           abortEarly: false,
         });
 
-        await signIn({
-          mobile: data.mobile,
-          password: data.password,
+        api.post('/password/forgot', {
+          email: data.email,
         });
 
-        const token = localStorage.getItem('@Massas:token');
-
-        if (!token) {
-          throw new Error('Error from api.');
-        }
+        addToast({
+          type: 'success',
+          title: 'E-mail para recuperação de senha enviado.',
+          description: 'Cheque sua caixa de entrada e siga as orientações.',
+        });
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -65,12 +61,15 @@ const SignIn: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro na autenticação',
-          description: 'Ocorreu erro ao fazer logon, cheque suas credenciais.',
+          title: 'Erro na recuperação de senha',
+          description:
+            'Ocorreu erro ao tentar recuperar a senha, tente novamente mais tarde.',
         });
+      } finally {
+        setLoading(false);
       }
     },
-    [signIn, addToast],
+    [addToast],
   );
 
   return (
@@ -80,29 +79,17 @@ const SignIn: React.FC = () => {
           <img src={logoImg} alt="Massas-Trigo" />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Faça seu logon</h1>
+            <h1>Recuperar senha</h1>
+            <Input name="email" icon={FiMail} placeholder="E-mail" />
 
-            <Input
-              name="mobile"
-              icon={FiPhone}
-              placeholder="Número do celular"
-            />
-
-            <Input
-              name="password"
-              icon={FiLock}
-              type="password"
-              placeholder="Senha"
-            />
-
-            <Button type="submit">Entrar</Button>
-
-            <Link to="/forgot-password">Esqueci minha senha</Link>
+            <Button loading={loading} type="submit">
+              Recuperar
+            </Button>
           </Form>
 
-          <Link to="/signup">
-            <FiLogIn />
-            Criar conta
+          <Link to="/">
+            <FiLogOut />
+            Retornar ao logon
           </Link>
         </AnimationContainer>
       </Content>
@@ -111,4 +98,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default ForgotPassword;
