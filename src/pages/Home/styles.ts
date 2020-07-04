@@ -1,22 +1,84 @@
 import styled from 'styled-components';
+
+import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  /* position: absolute; */
+`;
+
+export const SearchBox = styled.div`
+  position: absolute;
+  top: 24%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  background: #ff9000;
+  height: 40px;
+  border-radius: 40px;
+  padding: 10px;
+
+  &:hover {
+    width: 240px;
+    background: #f4ede8;
+  }
+`;
+
+export const SearchButton = styled(Link)`
+  color: #d85d10;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  position: absolute;
+  top: 0;
+  left: 202px;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    /* padding: 6px; */
+    margin: 11px;
+  }
+
+  &:hover {
+    /* padding: 0 6px; */
+  }
+`;
+
+export const InputSearch = styled.input`
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  margin-top: 2px;
+  color: #ff9000;
+  transition: 0.4s;
+  line-height: -50px;
+  width: 240px;
+
+  &:hover {
+    width: 240px;
+    /* padding: 0 6px; */
+  }
+`;
 
 export const Header = styled.div`
   padding: 32px 0;
   background: #d85d10;
+  max-height: 180px;
 `;
 
 export const HeaderContent = styled.div`
   max-width: 1060px;
   min-width: 1060px;
-  margin: 0 auto;
+  margin: -60px auto;
   display: flex;
   align-items: center;
 
   > img {
-    height: 120px;
+    height: 220px;
   }
 
   button {
@@ -32,8 +94,8 @@ export const Profile = styled.div`
   margin-left: 80px;
 
   img {
-    width: 44px;
-    height: 44px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
   }
 

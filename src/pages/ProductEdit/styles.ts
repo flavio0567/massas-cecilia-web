@@ -3,20 +3,28 @@ import { shade } from 'polished';
 
 export const Container = styled.div``;
 
+export const LoadingProducts = styled.text`
+  position: absolute;
+  height: 10px;
+  width: 10px;
+  background: black;
+`;
+
 export const Header = styled.div`
   padding: 32px 0;
   background: #d85d10;
+  max-height: 180px;
 `;
 
 export const HeaderContent = styled.div`
   max-width: 1060px;
   min-width: 1060px;
-  margin: 0 auto;
+  margin: -60px auto;
   display: flex;
   align-items: center;
 
-  > img {
-    height: 120px;
+  img {
+    height: 220px;
   }
 
   button {
@@ -60,10 +68,9 @@ export const Content = styled.main`
   align-items: center;
   justify-content: center;
 
-  max-width: 1120px;
   width: 100%;
-  max-width: 700px;
-  margin: auto;
+  max-width: 600px;
+  margin: 0 auto;
   padding: 20px;
 
   h1 {

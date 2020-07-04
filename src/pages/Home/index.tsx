@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { FiPower, FiEdit } from 'react-icons/fi';
+import { FiPower, FiEdit, FiSearch } from 'react-icons/fi';
 
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
-
 import logoIMG from '../../assets/logo.svg';
 
 import {
@@ -14,6 +13,9 @@ import {
   Profile,
   Content,
   ProductView,
+  SearchBox,
+  SearchButton,
+  InputSearch,
 } from './styles';
 
 interface ProductFormData {
@@ -31,6 +33,7 @@ interface ProductFormData {
 
 const Home: React.FC = () => {
   const { signOut, user } = useAuth();
+  const [search, setSearch] = useState();
 
   const [products, setProducts] = useState<ProductFormData[]>();
 
@@ -66,7 +69,7 @@ const Home: React.FC = () => {
               alt={user.name}
             />
             <div>
-              <span>Bem-vindo(a),</span>
+              <span>Bem-vinda(o),</span>
               <strong>{user.name}</strong>
             </div>
           </Profile>
@@ -78,6 +81,17 @@ const Home: React.FC = () => {
       </Header>
       <Content>
         <h1>Produtos cadastrados</h1>
+
+        <SearchBox>
+          <InputSearch
+            type="text"
+            value={search}
+            onChange={(text) => setSearch(text)}
+          />
+          <SearchButton to="#">
+            <FiSearch />
+          </SearchButton>
+        </SearchBox>
 
         {products?.map((prod) => (
           <ProductView key={prod.id}>
