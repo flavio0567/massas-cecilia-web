@@ -39,7 +39,7 @@ interface ProductFormData {
   sales_price: number;
   unit: string;
   amount: number;
-  is_active: number;
+  is_inactive: number;
   product_family: number;
   sub_category: number;
   category: number;
@@ -51,9 +51,12 @@ const ProductEdit: React.FC = () => {
   const { state } = useLocation<ProductFormData | null>();
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState<ProductFormData | null>(null);
+  const formRef = useRef<FormHandles>(null);
+  const { addToast } = useToast();
   const { user } = useAuth();
   const history = useHistory();
 
+  const [productId, setproductId] = useState();
   const [name, setName] = useState();
   const [sales_price, setSalesPrice] = useState();
   const [unit, setUnit] = useState();
@@ -64,70 +67,79 @@ const ProductEdit: React.FC = () => {
   const [sub_category, setSubCategory] = useState();
 
   useEffect(() => {
-    setLoading(true);
     setProduct(state);
-    setLoading(false);
-  }, [state]);
 
-  const formRef = useRef<FormHandles>(null);
+    formRef.current?.setData({
+      name: product?.nameFormatted,
+      sales_price: product?.sales_price,
+      unit: product?.unit,
+      amount: product?.amount,
+      is_inactive: product?.is_inactive,
+      product_family: product?.product_family,
+      sub_category: product?.sub_category,
+      category: product?.category,
+    });
+  }, [state, product]);
 
-  const { addToast } = useToast();
+  async function handleSubmit(data: ProductFormData) {
+    try {
+      setLoading(true);
 
-  const handleSubmit = useCallback(
-    async (data: ProductFormData) => {
-      try {
-        formRef.current?.setErrors({});
+      formRef.current?.setErrors({});
 
-        const schema = Yup.object().shape({
-          name: Yup.string().min(
-            5,
-            'Tamanho mínimo do nome do produto, 5 caracteres.',
-          ),
-          sales_price: Yup.number().required(
-            'Valor de venda do produto obrigatório.',
-          ),
-          unit: Yup.string().required(),
-          product_family: Yup.number(),
-          category: Yup.number(),
-          sub_ategory: Yup.number(),
-        });
+      const schema = Yup.object().shape({
+        name: Yup.string().min(
+          5,
+          'Tamanho mínimo do nome do produto, 5 caracteres.',
+        ),
+        sales_price: Yup.number().required(
+          'Valor de venda do produto obrigatório.',
+        ),
+        unit: Yup.string().required('Informe a unidade.'),
+        amount: Yup.number().required('Informe algum valor para estoque.'),
+        is_inactive: Yup.number(),
+        product_family: Yup.number(),
+        category: Yup.number(),
+        sub_ategory: Yup.number(),
+      });
 
-        await schema.validate(data, {
-          abortEarly: false,
-        });
+      await schema.validate(data, {
+        abortEarly: false,
+      });
 
-        const token = localStorage.getItem('@Massas:token');
+      const token = localStorage.getItem('@Massas:token');
 
-        if (!token) {
-          throw new Error('Token não informado.');
-        }
-
-        await api.post(`/products/${data.id}`, data);
-
-        history.push('/');
-
-        addToast({
-          type: 'success',
-          title: 'Alteração no produto realizada!',
-          description: 'Produto alterado conforme solicitado.',
-        });
-      } catch (err) {
-        if (err instanceof Yup.ValidationError) {
-          const errors = getValidationErrors(err);
-
-          formRef.current?.setErrors(errors);
-        }
-
-        addToast({
-          type: 'error',
-          title: 'Erro na autualização do produto',
-          description:
-            'Ocorreu erro ao atualizar o produto, cheque as infromações.',
-        });
+      if (!token) {
+        throw new Error('Token não informado.');
       }
-    },
-    [addToast, history],
-  );
+
+      await api.put(`/products/${product?.id}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      history.push('/');
+
+      addToast({
+        type: 'success',
+        title: 'Alteração no produto realizada!',
+        description: 'Produto alterado conforme solicitado.',
+      });
+    } catch (err) {
+      if (err instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+      }
+
+      addToast({
+        type: 'error',
+        title: 'Erro na autualização do produto',
+        description: `Ocorreu erro ao atualizar o produto, cheque as informações.`,
+      });
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <Container>
@@ -155,24 +167,27 @@ const ProductEdit: React.FC = () => {
               <Input
                 name="name"
                 icon={FiShoppingBag}
-                value={product.nameFormatted}
+                placeholder="Nome"
                 onChange={() => setName}
               />
 
               <Input
                 name="sales_price"
                 icon={FiDollarSign}
-                value={product.sales_price}
                 placeholder="R$"
                 onChange={() => setSalesPrice}
               />
 
-              <Input name="unit" icon={FiSettings} value={product.unit} />
+              <Input
+                name="unit"
+                icon={FiSettings}
+                onChange={() => setUnit}
+                placeholder="Unidade"
+              />
 
               <Input
                 name="amount"
                 icon={FiLayers}
-                value={product.amount}
                 placeholder="Quantidade em estoque"
                 onChange={() => setAmount}
               />
@@ -181,7 +196,6 @@ const ProductEdit: React.FC = () => {
                 name="is_inactive"
                 icon={FiBellOff}
                 placeholder="Produto inativo? (1-sim 0-não)"
-                value={product.is_active}
                 onChange={() => setIsInactive}
               />
 
@@ -189,7 +203,6 @@ const ProductEdit: React.FC = () => {
                 name="product_family"
                 icon={FiTag}
                 placeholder="Família do produto (ex.: 1-massas, 2-molhos,...)"
-                value={product.product_family}
                 onChange={() => setProductFamily}
               />
 
@@ -197,19 +210,17 @@ const ProductEdit: React.FC = () => {
                 name="category"
                 icon={FiTag}
                 placeholder="Categoria (ex.: 1-Lasanha, 2-Nhoque, ...)"
-                value={product.category}
                 onChange={() => setCategory}
               />
               <Input
                 name="sub_category"
                 icon={FiTag}
                 placeholder="Sub categoria (ex.: 1-Lasanha bolonhesa, ...)"
-                value={product.sub_category}
                 onChange={() => setSubCategory}
               />
 
               <Button type="submit" loading={loading}>
-                Enviar
+                Confirmar
               </Button>
             </Form>
           )}

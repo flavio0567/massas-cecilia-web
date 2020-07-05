@@ -13,9 +13,10 @@ import {
   Profile,
   Content,
   ProductView,
-  SearchBox,
-  SearchButton,
-  InputSearch,
+  List,
+  // SearchBox,
+  // SearchButton,
+  // InputSearch,
 } from './styles';
 
 interface ProductFormData {
@@ -33,7 +34,7 @@ interface ProductFormData {
 
 const Home: React.FC = () => {
   const { signOut, user } = useAuth();
-  const [search, setSearch] = useState();
+  // const [search, setSearch] = useState();
 
   const [products, setProducts] = useState<ProductFormData[]>();
 
@@ -51,9 +52,7 @@ const Home: React.FC = () => {
           }).format(product.sales_price),
         };
       });
-
       setProducts(productsFormatted);
-      console.log(typeof productsFormatted);
     });
   }, []);
 
@@ -80,38 +79,36 @@ const Home: React.FC = () => {
         </HeaderContent>
       </Header>
       <Content>
-        <h1>Produtos cadastrados</h1>
+        <h1>Lista de Produtos para o app Massas da Cecilia</h1>
 
-        <SearchBox>
+        {/* <SearchBox>
           <InputSearch
             type="text"
             value={search}
-            onChange={(text) => setSearch(text)}
+            onChange={(text) => setSearch()}
           />
           <SearchButton to="#">
             <FiSearch />
           </SearchButton>
-        </SearchBox>
+        </SearchBox> */}
 
         {products?.map((prod) => (
           <ProductView key={prod.id}>
-            <ul>
-              <li>
-                <span>{prod.code}</span>
-                <strong>{prod.nameFormatted}</strong>
-                <strong>{prod.priceFormatted}</strong>
-                <strong>{prod.unit}</strong>
-                <span>
-                  Família: <strong>{prod.product_family}</strong>
-                </span>
-                <span>
-                  Categoria: <strong>{prod.category}</strong>
-                </span>
-                <span>
-                  Sub_Categoria: <strong>{prod.sub_category}</strong>
-                </span>
-              </li>
-            </ul>
+            <List>
+              <span>{prod.code}</span>
+              <strong>{prod.nameFormatted}</strong>
+              <span>{prod.priceFormatted}</span>
+              <span>{prod.unit}</span>
+              <span>
+                Família: <span>{prod.product_family}</span>
+              </span>
+              <span>
+                Categoria: <span>{prod.category}</span>
+              </span>
+              <span>
+                Sub_Categoria: <span>{prod.sub_category}</span>
+              </span>
+            </List>
             <Link
               to={{
                 pathname: '/product',

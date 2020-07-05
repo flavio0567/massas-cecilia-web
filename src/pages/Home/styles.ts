@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 import { Link } from 'react-router-dom';
-import Button from '../../components/Button';
 
 export const Container = styled.div`
-  /* position: absolute; */
+  justify-content: center;
+  align-items: center;
 `;
 
 export const SearchBox = styled.div`
@@ -37,12 +37,7 @@ export const SearchButton = styled(Link)`
   align-items: center;
 
   svg {
-    /* padding: 6px; */
     margin: 11px;
-  }
-
-  &:hover {
-    /* padding: 0 6px; */
   }
 `;
 
@@ -60,7 +55,6 @@ export const InputSearch = styled.input`
 
   &:hover {
     width: 240px;
-    /* padding: 0 6px; */
   }
 `;
 
@@ -117,31 +111,33 @@ export const Profile = styled.div`
 `;
 
 export const Content = styled.main`
-  max-width: 1120px;
-  margin: auto;
-  padding: 20px;
+  margin: 24px 420px;
 
   h1 {
-    margin: 24px;
+    margin: 0 14px;
   }
 `;
 
 export const ProductView = styled.div`
+  min-width: 1040px;
+  max-width: 1040px;
   display: flex;
   padding: 12px 12px;
   border-radius: 10px;
   background: #f1e0ad;
   opacity: 0.8;
   margin: 10px;
-  list-style: none;
 
-  ul {
-    list-style-type: none;
-    padding-left: 0px;
+  a {
+    color: #532000;
   }
 
   span {
+    min-width: 120px;
+    max-width: 120px;
     color: #666;
+    margin: 0 15px;
+    font-size: 18px;
   }
 
   strong {
@@ -149,15 +145,13 @@ export const ProductView = styled.div`
 
     width: 290px;
     color: #532000;
-    margin: 0 15px;
+    font-size: 20px;
     font-weight: bold;
   }
 `;
 
-export const ButtonEdit = styled(Button)`
-  background: #f0e68c;
-  width: 30px;
-  height: 30px;
-  padding: 5px;
-  border-radius: 15px;
+export const List = styled.div`
+  min-width: 980px;
+  max-width: 980px;
+  padding-left: 0px;
 `;
