@@ -111,7 +111,7 @@ export const Profile = styled.div`
 `;
 
 export const Content = styled.main`
-  margin: 24px 420px;
+  margin: 24px 320px;
 
   h1 {
     margin: 0 14px;
