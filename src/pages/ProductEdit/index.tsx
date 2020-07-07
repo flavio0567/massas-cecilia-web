@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   FiLogOut,
   FiShoppingBag,
@@ -49,22 +49,14 @@ interface ProductFormData {
 
 const ProductEdit: React.FC = () => {
   const { state } = useLocation<ProductFormData | null>();
-  const [loading, setLoading] = useState(false);
-  const [product, setProduct] = useState<ProductFormData | null>(null);
-  const formRef = useRef<FormHandles>(null);
   const { addToast } = useToast();
   const { user } = useAuth();
-  const history = useHistory();
 
-  const [productId, setproductId] = useState();
-  const [name, setName] = useState();
-  const [sales_price, setSalesPrice] = useState();
-  const [unit, setUnit] = useState();
-  const [amount, setAmount] = useState();
-  const [is_inactive, setIsInactive] = useState();
-  const [product_family, setProductFamily] = useState();
-  const [category, setCategory] = useState();
-  const [sub_category, setSubCategory] = useState();
+  const [product, setProduct] = useState<ProductFormData | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
 
   useEffect(() => {
     setProduct(state);
@@ -161,62 +153,46 @@ const ProductEdit: React.FC = () => {
       <Content>
         <AnimationContainer>
           {product && (
-            <Form ref={formRef} onSubmit={handleSubmit}>
+            <Form
+              ref={formRef}
+              initialData={{ product }}
+              onSubmit={handleSubmit}
+            >
               <h1>Alterar os dados do produto</h1>
 
-              <Input
-                name="name"
-                icon={FiShoppingBag}
-                placeholder="Nome"
-                onChange={() => setName}
-              />
+              <Input name="name" icon={FiShoppingBag} placeholder="Nome" />
 
-              <Input
-                name="sales_price"
-                icon={FiDollarSign}
-                placeholder="R$"
-                onChange={() => setSalesPrice}
-              />
+              <Input name="sales_price" icon={FiDollarSign} placeholder="R$" />
 
-              <Input
-                name="unit"
-                icon={FiSettings}
-                onChange={() => setUnit}
-                placeholder="Unidade"
-              />
+              <Input name="unit" icon={FiSettings} placeholder="Unidade" />
 
               <Input
                 name="amount"
                 icon={FiLayers}
                 placeholder="Quantidade em estoque"
-                onChange={() => setAmount}
               />
 
               <Input
                 name="is_inactive"
                 icon={FiBellOff}
                 placeholder="Produto inativo? (1-sim 0-não)"
-                onChange={() => setIsInactive}
               />
 
               <Input
                 name="product_family"
                 icon={FiTag}
                 placeholder="Família do produto (ex.: 1-massas, 2-molhos,...)"
-                onChange={() => setProductFamily}
               />
 
               <Input
                 name="category"
                 icon={FiTag}
                 placeholder="Categoria (ex.: 1-Lasanha, 2-Nhoque, ...)"
-                onChange={() => setCategory}
               />
               <Input
                 name="sub_category"
                 icon={FiTag}
                 placeholder="Sub categoria (ex.: 1-Lasanha bolonhesa, ...)"
-                onChange={() => setSubCategory}
               />
 
               <Button type="submit" loading={loading}>

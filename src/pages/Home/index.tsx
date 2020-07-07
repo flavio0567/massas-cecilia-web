@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FiPower, FiEdit, FiSearch } from 'react-icons/fi';
+import { FiPower, FiEdit } from 'react-icons/fi';
 
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
