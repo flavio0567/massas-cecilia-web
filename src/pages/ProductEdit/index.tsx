@@ -81,8 +81,8 @@ const ProductEdit: React.FC = () => {
 
       const schema = Yup.object().shape({
         name: Yup.string().min(
-          5,
-          'Tamanho mínimo do nome do produto, 5 caracteres.',
+          2,
+          'Tamanho mínimo do nome do produto, 2 caracteres.',
         ),
         sales_price: Yup.number().required(
           'Valor de venda do produto obrigatório.',
@@ -92,7 +92,7 @@ const ProductEdit: React.FC = () => {
         is_inactive: Yup.number(),
         product_family: Yup.number(),
         category: Yup.number(),
-        sub_ategory: Yup.number(),
+        sub_category: Yup.number(),
       });
 
       await schema.validate(data, {

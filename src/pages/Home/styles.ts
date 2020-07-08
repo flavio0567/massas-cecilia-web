@@ -32,10 +32,10 @@ export const InputSearch = styled.input`
   outline: none;
   float: left;
   padding: 0;
-  margin-top: -10px;
+  margin-top: -5px;
   font-size: 16px;
   transition: 0.4s;
-  line-height: 40px;
+  line-height: 30px;
   width: 0px;
 
   &:hover {

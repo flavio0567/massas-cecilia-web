@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { FiPower, FiEdit, FiSearch } from 'react-icons/fi';
+import { FiPower, FiEdit, FiSearch, FiBellOff } from 'react-icons/fi';
 
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
@@ -25,6 +25,7 @@ interface ProductFormData {
   name: string;
   unit: string;
   sales_price: number;
+  is_inactive: number;
   product_family: number;
   category: number;
   sub_category: number;
@@ -115,6 +116,7 @@ const Home: React.FC = () => {
         {selected?.map((prod) => (
           <ProductView key={prod.id}>
             <List>
+              {prod.is_inactive ? <FiBellOff color="#ff0000" /> : null}
               <span>{prod.code}</span>
               <strong>{prod.nameFormatted}</strong>
               <span>{prod.priceFormatted}</span>
