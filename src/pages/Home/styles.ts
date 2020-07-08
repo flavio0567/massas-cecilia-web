@@ -7,8 +7,9 @@ export const Container = styled.div`
 
 export const SearchBox = styled.div`
   position: absolute;
-  top: 20%;
-  left: 64%;
+  top: 21%;
+  left: 58%;
+
   transform: translate(-50%, -50%);
   background: #ffc780;
   height: 40px;

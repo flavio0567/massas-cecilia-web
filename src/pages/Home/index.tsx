@@ -88,7 +88,9 @@ const Home: React.FC = () => {
             <FiPower />
           </button>
         </HeaderContent>
+      </Header>
 
+      <Content>
         <SearchBox>
           <InputSearch
             name="query"
@@ -102,9 +104,13 @@ const Home: React.FC = () => {
             <FiSearch />
           </SearchButton>
         </SearchBox>
-      </Header>
-      <Content>
-        <h1>Lista de Produtos 📱 Massas da Cecilia</h1>
+        <h1>
+          Lista de Produtos
+          <span role="img" aria-label="mobile">
+            📱
+          </span>
+          Massas da Cecilia
+        </h1>
 
         {selected?.map((prod) => (
           <ProductView key={prod.id}>
