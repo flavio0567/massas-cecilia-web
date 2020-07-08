@@ -45,7 +45,7 @@ const Home: React.FC = () => {
       (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
     );
     setSelected(newSelection);
-  }, [products?.filter, query]);
+  }, [query, products]);
 
   useEffect(() => {
     api.get<ProductFormData[]>('/products').then((response) => {

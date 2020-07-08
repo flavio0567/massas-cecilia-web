@@ -7,7 +7,7 @@ export const Container = styled.div`
 
 export const SearchBox = styled.div`
   position: absolute;
-  top: 21%;
+  top: 22%;
   left: 58%;
 
   transform: translate(-50%, -50%);
