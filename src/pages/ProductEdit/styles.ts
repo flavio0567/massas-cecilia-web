@@ -3,13 +3,6 @@ import { shade } from 'polished';
 
 export const Container = styled.div``;
 
-export const LoadingProducts = styled.text`
-  position: absolute;
-  height: 10px;
-  width: 10px;
-  background: black;
-`;
-
 export const Header = styled.div`
   padding: 32px 0;
   background: #d85d10;
@@ -68,15 +61,6 @@ export const Content = styled.main`
   align-items: center;
   justify-content: center;
 
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-
-  h1 {
-    margin: 24px;
-  }
-
   svg {
     margin-right: 16px;
   }
@@ -84,7 +68,7 @@ export const Content = styled.main`
   a {
     color: #f4ede8;
     display: block;
-    margin-top: 24px;
+    margin-top: 14px;
     text-decoration: none;
     transition: color 0.2s;
 
@@ -118,8 +102,8 @@ export const AnimationContainer = styled.div`
     text-align: center;
 
     h1 {
-      margin-bottom: 24px;
-      padding: 20px;
+      margin: 50px 0 4px;
+      padding: 10px;
     }
 
     input {

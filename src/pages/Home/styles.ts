@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-import { Link } from 'react-router-dom';
-
 export const Container = styled.div`
   justify-content: center;
   align-items: center;
@@ -9,35 +7,21 @@ export const Container = styled.div`
 
 export const SearchBox = styled.div`
   position: absolute;
-  top: 24%;
-  left: 60%;
+  top: 20%;
+  left: 64%;
   transform: translate(-50%, -50%);
-  background: #ff9000;
+  background: #ffc780;
   height: 40px;
   border-radius: 40px;
   padding: 10px;
 
-  &:hover {
+  &:hover > input {
     width: 240px;
-    background: #f4ede8;
+    padding: 0 6px;
   }
-`;
 
-export const SearchButton = styled(Link)`
-  color: #d85d10;
-  float: right;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #fff;
-  position: absolute;
-  top: 0;
-  left: 202px;
-  justify-content: center;
-  align-items: center;
-
-  svg {
-    margin: 11px;
+  &:hover > button {
+    background: #f4ede8;
   }
 `;
 
@@ -47,15 +31,29 @@ export const InputSearch = styled.input`
   outline: none;
   float: left;
   padding: 0;
-  margin-top: 2px;
-  color: #ff9000;
+  margin-top: -10px;
+  font-size: 16px;
   transition: 0.4s;
-  line-height: -50px;
-  width: 240px;
+  line-height: 40px;
+  width: 0px;
 
   &:hover {
     width: 240px;
   }
+`;
+
+export const SearchButton = styled.button`
+  color: #d85d10;
+  float: right;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0;
+  background: #ffc780;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: -10px;
 `;
 
 export const Header = styled.div`
@@ -76,7 +74,8 @@ export const HeaderContent = styled.div`
   }
 
   button {
-    margin-left: auto;
+    /* margin-left: auto; */
+    margin: 0 auto;
     background: transparent;
     border: 0;
   }
@@ -114,7 +113,7 @@ export const Content = styled.main`
   margin: 24px 320px;
 
   h1 {
-    margin: 0 14px;
+    margin: 26px 14px;
   }
 `;
 
@@ -124,7 +123,7 @@ export const ProductView = styled.div`
   display: flex;
   padding: 12px 12px;
   border-radius: 10px;
-  background: #f1e0ad;
+  background: #ffc780;
   opacity: 0.8;
   margin: 10px;
 

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { FiPower, FiEdit } from 'react-icons/fi';
+import React, { useEffect, useState, useCallback } from 'react';
+import { FiPower, FiEdit, FiSearch } from 'react-icons/fi';
 
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth';
@@ -14,9 +14,9 @@ import {
   Content,
   ProductView,
   List,
-  // SearchBox,
-  // SearchButton,
-  // InputSearch,
+  SearchBox,
+  SearchButton,
+  InputSearch,
 } from './styles';
 
 interface ProductFormData {
@@ -34,9 +34,18 @@ interface ProductFormData {
 
 const Home: React.FC = () => {
   const { signOut, user } = useAuth();
-  // const [search, setSearch] = useState();
+  const [query, setQuery] = useState<string>();
 
   const [products, setProducts] = useState<ProductFormData[]>();
+
+  const [selected, setSelected] = useState<ProductFormData[]>();
+
+  const search = useCallback(async () => {
+    const newSelection = products?.filter(
+      (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
+    );
+    setSelected(newSelection);
+  }, [products?.filter, query]);
 
   useEffect(() => {
     api.get<ProductFormData[]>('/products').then((response) => {
@@ -52,6 +61,8 @@ const Home: React.FC = () => {
           }).format(product.sales_price),
         };
       });
+
+      setSelected(productsFormatted);
       setProducts(productsFormatted);
     });
   }, []);
@@ -77,22 +88,25 @@ const Home: React.FC = () => {
             <FiPower />
           </button>
         </HeaderContent>
-      </Header>
-      <Content>
-        <h1>Lista de Produtos para o app Massas da Cecilia</h1>
 
-        {/* <SearchBox>
+        <SearchBox>
           <InputSearch
+            name="query"
             type="text"
-            value={search}
-            onChange={(text) => setSearch()}
+            value={query}
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              setQuery(e.currentTarget.value)
+            }
           />
-          <SearchButton to="#">
+          <SearchButton type="submit" onClick={search}>
             <FiSearch />
           </SearchButton>
-        </SearchBox> */}
+        </SearchBox>
+      </Header>
+      <Content>
+        <h1>Lista de Produtos 📱 Massas da Cecilia</h1>
 
-        {products?.map((prod) => (
+        {selected?.map((prod) => (
           <ProductView key={prod.id}>
             <List>
               <span>{prod.code}</span>
