@@ -102,7 +102,7 @@ const Home: React.FC = () => {
 
       loadProducts();
     },
-    [],
+    [loadProducts, token],
   );
 
   const handleAvatarChange = useCallback(
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
           .patch(`products/avatar/${id}`, data, {
             headers: { Authorization: `Bearer ${token}` },
           })
-          .then((response) => {
+          .then(() => {
             addToast({
               type: 'success',
               title: 'Avatar do produto atualizado!',
@@ -126,7 +126,7 @@ const Home: React.FC = () => {
           });
       }
     },
-    [addToast, token],
+    [addToast, token, loadProducts],
   );
 
   return (
