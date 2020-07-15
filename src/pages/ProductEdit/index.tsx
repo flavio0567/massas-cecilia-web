@@ -28,6 +28,7 @@ import {
   Profile,
   Content,
   AnimationContainer,
+  Aside,
 } from './styles';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
@@ -41,8 +42,9 @@ interface ProductFormData {
   amount: number;
   is_inactive: number;
   product_family: number;
-  sub_category: number;
   category: number;
+  sub_category: number;
+  avatar_url: string;
   nameFormatted: string;
   priceFormatted: number;
 }
@@ -152,59 +154,69 @@ const ProductEdit: React.FC = () => {
       </Header>
       <Content>
         <AnimationContainer>
-          {product && (
-            <Form
-              ref={formRef}
-              initialData={{ product }}
-              onSubmit={handleSubmit}
-            >
-              <h1>Alterar os dados do produto</h1>
+          <Aside>
+            {product && (
+              <Form
+                ref={formRef}
+                initialData={{ product }}
+                onSubmit={handleSubmit}
+              >
+                <h1>Alterar os dados do produto</h1>
 
-              <Input name="name" icon={FiShoppingBag} placeholder="Nome" />
+                <Input name="name" icon={FiShoppingBag} placeholder="Nome" />
 
-              <Input name="sales_price" icon={FiDollarSign} placeholder="R$" />
+                <Input
+                  name="sales_price"
+                  icon={FiDollarSign}
+                  placeholder="R$"
+                />
 
-              <Input name="unit" icon={FiSettings} placeholder="Unidade" />
+                <Input name="unit" icon={FiSettings} placeholder="Unidade" />
 
-              <Input
-                name="amount"
-                icon={FiLayers}
-                placeholder="Quantidade em estoque"
-              />
+                <Input
+                  name="amount"
+                  icon={FiLayers}
+                  placeholder="Quantidade em estoque"
+                />
 
-              <Input
-                name="is_inactive"
-                icon={FiBellOff}
-                placeholder="Produto inativo? (1-sim 0-não)"
-              />
+                <Input
+                  name="is_inactive"
+                  icon={FiBellOff}
+                  placeholder="Produto inativo? (1-sim 0-não)"
+                />
 
-              <Input
-                name="product_family"
-                icon={FiTag}
-                placeholder="Família do produto (ex.: 1-massas, 2-molhos,...)"
-              />
+                <Input
+                  name="product_family"
+                  icon={FiTag}
+                  placeholder="Família do produto (ex.: 1-massas, 2-molhos,...)"
+                />
 
-              <Input
-                name="category"
-                icon={FiTag}
-                placeholder="Categoria (ex.: 1-Lasanha, 2-Nhoque, ...)"
-              />
-              <Input
-                name="sub_category"
-                icon={FiTag}
-                placeholder="Sub categoria (ex.: 1-Lasanha bolonhesa, ...)"
-              />
+                <Input
+                  name="category"
+                  icon={FiTag}
+                  placeholder="Categoria (ex.: 1-Lasanha, 2-Nhoque, ...)"
+                />
+                <Input
+                  name="sub_category"
+                  icon={FiTag}
+                  placeholder="Sub categoria (ex.: 1-Lasanha bolonhesa, ...)"
+                />
 
-              <Button type="submit" loading={loading}>
-                Confirmar
-              </Button>
-            </Form>
-          )}
+                <Button type="submit" loading={loading}>
+                  Confirmar
+                </Button>
+                <Link to="/home">
+                  <FiLogOut />
+                  Retornar a lista de produtos
+                </Link>
+              </Form>
+            )}
+
+            {product?.avatar_url ? (
+              <img src={product.avatar_url} alt={product.name} />
+            ) : null}
+          </Aside>
         </AnimationContainer>
-        <Link to="/home">
-          <FiLogOut />
-          Retornar a lista de produtos
-        </Link>
       </Content>
     </Container>
   );

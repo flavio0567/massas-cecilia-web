@@ -1,7 +1,13 @@
 import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+`;
 
 export const Header = styled.div`
   padding: 32px 0;
@@ -61,6 +67,7 @@ export const Content = styled.main`
   align-items: center;
   justify-content: center;
 
+  margin: 20px 300px;
   svg {
     margin-right: 16px;
   }
@@ -168,5 +175,14 @@ export const AnimationContainer = styled.div`
     &:hover {
       color: ${shade(0.2, '#d85d10')};
     }
+  }
+`;
+export const Aside = styled.div`
+  display: flex;
+
+  img {
+    width: 400px;
+    height: 400px;
+    padding: 60px 60px;
   }
 `;
