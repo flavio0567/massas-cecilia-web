@@ -45,7 +45,6 @@ interface ProductFormData {
   category: number;
   sub_category: number;
   avatar_url: string;
-  nameFormatted: string;
   priceFormatted: number;
 }
 
@@ -64,7 +63,7 @@ const ProductEdit: React.FC = () => {
     setProduct(state);
 
     formRef.current?.setData({
-      name: product?.nameFormatted,
+      name: product?.name,
       sales_price: product?.sales_price,
       unit: product?.unit,
       amount: product?.amount,

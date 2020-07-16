@@ -42,7 +42,6 @@ interface ProductFormData {
   category: number;
   avatar_url: string;
   sub_category: number;
-  nameFormatted: string;
   priceFormatted: string;
 }
 
@@ -64,9 +63,6 @@ const Home: React.FC = () => {
       const productsFormatted = response.data.product.map((product: any) => {
         return {
           ...(product as Object),
-          nameFormatted:
-            product.name.charAt(0).toUpperCase() +
-            product.name.slice(1).toLowerCase(),
           priceFormatted: Intl.NumberFormat('pt-BR', {
             style: 'currency',
             currency: 'BRL',
@@ -198,7 +194,7 @@ const Home: React.FC = () => {
                   <span>{prod.code}</span>
                 </AvatarInfo>
                 <ProductDetail>
-                  <strong>{prod.nameFormatted}</strong>
+                  <strong>{prod.name}</strong>
                   <div>
                     <div>
                       <span>Familia</span>
