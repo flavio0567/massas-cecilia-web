@@ -61,6 +61,7 @@ const Home: React.FC = () => {
   const loadProducts = useCallback(async () => {
     await api.get('/products').then((response) => {
       const productsFormatted = response.data.product.map((product: any) => {
+        console.log(product.avatar_url);
         return {
           ...(product as Object),
           priceFormatted: Intl.NumberFormat('pt-BR', {
@@ -69,7 +70,6 @@ const Home: React.FC = () => {
           }).format(product.sales_price),
         };
       });
-
       setSelected(productsFormatted);
       setProducts(productsFormatted);
     });
