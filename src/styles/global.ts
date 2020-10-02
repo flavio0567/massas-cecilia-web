@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import 'react-perfect-scrollbar/dist/css/styles.css';
+
 export default createGlobalStyle`
   * {
     margin: 0;
@@ -9,7 +11,8 @@ export default createGlobalStyle`
   }
 
   body {
-    background: #ff9000;
+    /* background: #ff9000; */
+    background: #FFF7DE;
     color: #FFF;
     -webkit-font-smoothing: antialiased;
   }

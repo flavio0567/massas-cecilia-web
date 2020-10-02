@@ -9,6 +9,8 @@ import {
 } from 'react-icons/fi';
 
 import { Link } from 'react-router-dom';
+import Notifications from '../Notifications';
+
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
@@ -61,7 +63,6 @@ const Home: React.FC = () => {
   const loadProducts = useCallback(async () => {
     await api.get('/products').then((response) => {
       const productsFormatted = response.data.product.map((product: any) => {
-        console.log(product.avatar_url);
         return {
           ...(product as Object),
           priceFormatted: Intl.NumberFormat('pt-BR', {
@@ -84,7 +85,7 @@ const Home: React.FC = () => {
       (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
     );
     setSelected(newSelection);
-  }, [query, products]);
+  }, [products?.filter, query]);
 
   const handleActivateProduct = useCallback(
     async (product: ProductFormData) => {
@@ -128,22 +129,26 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Header>
-        <img src={logoIMG} alt="logo massas" />
-
-        <Profile>
-          <img
-            src={`https://ui-avatars.com/api/?name=${user.name}`}
-            alt={user.name}
-          />
-          <div>
-            <span>Bem-vinda(o),</span>
-            <strong>{user.name}</strong>
-          </div>
-        </Profile>
-
-        <button type="button" onClick={signOut}>
-          <FiPower />
-        </button>
+        <nav>
+          <img src={logoIMG} alt="logo massas" />
+          <Link to="/orders">PEDIDOS</Link>
+        </nav>
+        <Notifications />
+        <aside>
+          <Profile>
+            <img
+              src={`https://ui-avatars.com/api/?name=${user.name}`}
+              alt={user.name}
+            />
+            <div>
+              <span>Bem-vinda(o),</span>
+              <strong>{user.name}</strong>
+            </div>
+            <button type="button" onClick={signOut}>
+              <FiPower />
+            </button>
+          </Profile>
+        </aside>
       </Header>
 
       <Content>

@@ -49,6 +49,7 @@ export const AnimationContainer = styled.div`
 
     h1 {
       margin-bottom: 24px;
+      color: #ff9000;
     }
 
     input {
@@ -71,7 +72,7 @@ export const AnimationContainer = styled.div`
       border-radius: 10px;
       border: 0;
       padding: 0 16px;
-      color: #532000;
+      color: #fff;
       width: 100%;
       font-weight: 500;
       margin-top: 16px;
@@ -83,7 +84,7 @@ export const AnimationContainer = styled.div`
     }
 
     a {
-      color: #f4ede8;
+      color: #ff9000;
       display: block;
       margin-top: 24px;
       text-decoration: none;

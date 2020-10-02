@@ -1,31 +1,41 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  height: 100vh;
-
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-`;
+export const Container = styled.div``;
 
 export const Header = styled.div`
-  height: 100vh;
-  max-height: 200px;
+  position: relative;
+  height: 84px;
+  max-width: 900px;
+  min-width: 900px;
+  margin: 0 auto;
 
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
-  background: #d85d10;
+  background: #fd9458;
 
-  > img {
-    height: 260px;
-    margin: 0 300px 80px;
+  nav {
+    display: flex;
+    align-items: center;
+
+    img {
+      height: 260px;
+      margin: 0 20px 70px;
+    }
+
+    a {
+      font-weight: bold;
+      color: #fff;
+    }
+  }
+
+  aside {
+    margin-right: 40px;
   }
 
   button {
-    margin: auto;
+    margin-left: 20px;
     background: transparent;
     border: 0;
   }
@@ -34,7 +44,7 @@ export const Header = styled.div`
 export const Profile = styled.div`
   display: flex;
   align-items: center;
-  margin-left: -280px;
+  margin-left: -240px;
 
   img {
     width: 46px;
@@ -64,6 +74,10 @@ export const Content = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  h1 {
+    color: #ff9000;
+  }
 `;
 
 export const SearchBox = styled.div`
