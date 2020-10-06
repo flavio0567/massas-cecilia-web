@@ -88,33 +88,40 @@ const OrderEdit: React.FC = () => {
     setOrder(state);
 
     formRef.current?.setData({
-      delivery_name: order?.delivery_name,
-      delivery_mobile: order?.delivery_mobile,
-      delivery_address1: order?.delivery_address1,
-      delivery_address2: order?.delivery_address2,
-      delivery_city: order?.delivery_city,
-      delivery_state: order?.delivery_state,
-      delivery_zip_code: order?.delivery_zip_code,
-      delivery_date: order?.delivery_date,
-      delivery_time: order?.delivery_time,
-      order_total: order?.order_total,
-      ordersdetail: order?.ordersdetail,
+      order,
     });
-  }, [
-    order?.delivery_address1,
-    order?.delivery_address2,
-    order?.delivery_city,
-    order?.delivery_date,
-    order?.delivery_mobile,
-    order?.delivery_name,
-    order?.delivery_state,
-    order?.delivery_time,
-    order?.delivery_zip_code,
-    order?.order_total,
-    order?.ordersdetail,
-    state,
-    order,
-  ]);
+  }, [order, state]);
+  // useEffect(() => {
+  //   setOrder(state);
+
+  //   formRef.current?.setData({
+  //     delivery_name: order?.delivery_name,
+  //     delivery_mobile: order?.delivery_mobile,
+  //     delivery_address1: order?.delivery_address1,
+  //     delivery_address2: order?.delivery_address2,
+  //     delivery_city: order?.delivery_city,
+  //     delivery_state: order?.delivery_state,
+  //     delivery_zip_code: order?.delivery_zip_code,
+  //     delivery_date: order?.delivery_date,
+  //     delivery_time: order?.delivery_time,
+  //     order_total: order?.order_total,
+  //     ordersdetail: order?.ordersdetail,
+  //   });
+  // }, [
+  //   order?.delivery_address1,
+  //   order?.delivery_address2,
+  //   order?.delivery_city,
+  //   order?.delivery_date,
+  //   order?.delivery_mobile,
+  //   order?.delivery_name,
+  //   order?.delivery_state,
+  //   order?.delivery_time,
+  //   order?.delivery_zip_code,
+  //   order?.order_total,
+  //   order?.ordersdetail,
+  //   state,
+  //   order,
+  // ]);
 
   async function handleSubmit(data: OrderProps) {
     try {
