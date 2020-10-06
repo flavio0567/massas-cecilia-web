@@ -7,7 +7,15 @@ import {
   FiDollarSign,
   FiLayers,
   FiBellOff,
+  FiPhoneCall,
+  FiBookOpen,
+  FiCalendar,
+  FiShoppingCart,
+  FiPlusSquare,
+  FiHome,
+  FiUser,
 } from 'react-icons/fi';
+
 import { FormHandles } from '@unform/core';
 
 import * as Yup from 'yup';
@@ -29,76 +37,100 @@ import {
   Content,
   AnimationContainer,
   Aside,
+  OrderDetail,
 } from './styles';
 
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 
-interface OrderFormData {
+interface OrderDetail {
+  order_id: string;
+  product_id: string;
+  sales_price: number;
+  unit: string;
+  amount: number;
+  quantity: number;
+}
+
+export interface OrderProps {
+  id: string;
   delivery_name: string;
+  delivery_mobile: string;
   delivery_address1: string;
   delivery_address2: string;
   delivery_city: string;
   delivery_state: string;
   delivery_zip_code: string;
-  delivery_date: Date;
-  delivery_mobile: string;
+  delivery_date: string;
   delivery_time: string;
   order_total: number;
+  is_delivered: number;
+  is_order_delivering: number;
+  ordersdetail: OrderDetail[];
+  totalFormatted: number;
+  date: Date;
 }
 
 const OrderEdit: React.FC = () => {
-  const { state } = useLocation<OrderFormData | null>();
+  const { state } = useLocation<OrderProps | null>();
   const { addToast } = useToast();
   const { user } = useAuth();
 
-  const [order, setOrder] = useState<OrderFormData | null>(null);
+  const [order, setOrder] = useState<OrderProps | null>(null);
+  const [orderDetail, setOrderDetail] = useState<OrderDetail[]>([]);
   const [loading, setLoading] = useState(false);
 
   const formRef = useRef<FormHandles>(null);
+
   const history = useHistory();
 
-  // useEffect(() => {
-  //   setOrder(state);
+  useEffect(() => {
+    setOrder(state);
 
-  //   formRef.current?.setData({
-  //     delivery_name: order?.delivery_name,
-  //     delivery_address1: order?.delivery_address1,
-  //     delivery_address2: order?.delivery_address2,
-  //     delivery_city: order?.delivery_city,
-  //     delivery_state: order?.delivery_state,
-  //     delivery_zip_code: order?.delivery_zip_code,
-  //     delivery_date: order?.delivery_date,
-  //     delivery_mobile: order?.delivery_mobile,
-  //     delivery_time: order?.delivery_time,
-  //     order_total: order?.order_total,
-  //   });
-  // }, [state, order]);
+    formRef.current?.setData({
+      delivery_name: order?.delivery_name,
+      delivery_mobile: order?.delivery_mobile,
+      delivery_address1: order?.delivery_address1,
+      delivery_address2: order?.delivery_address2,
+      delivery_city: order?.delivery_city,
+      delivery_state: order?.delivery_state,
+      delivery_zip_code: order?.delivery_zip_code,
+      delivery_date: order?.delivery_date,
+      delivery_time: order?.delivery_time,
+      order_total: order?.order_total,
+      orderDetail,
+    });
+  }, [
+    order?.delivery_address1,
+    order?.delivery_address2,
+    order?.delivery_city,
+    order?.delivery_date,
+    order?.delivery_mobile,
+    order?.delivery_name,
+    order?.delivery_state,
+    order?.delivery_time,
+    order?.delivery_zip_code,
+    order?.order_total,
+    orderDetail,
+    state,
+  ]);
 
-  async function handleSubmit(data: OrderFormData) {
+  async function handleSubmit(data: OrderProps) {
     try {
       setLoading(true);
 
       formRef.current?.setErrors({});
 
-      // const schema = Yup.object().shape({
-      //   name: Yup.string().min(
-      //     2,
-      //     'Tamanho mínimo do nome do produto, 2 caracteres.',
-      //   ),
-      //   sales_price: Yup.number().required(
-      //     'Valor de venda do produto obrigatório.',
-      //   ),
-      //   unit: Yup.string().required('Informe a unidade.'),
-      //   amount: Yup.number().required('Informe algum valor para estoque.'),
-      //   is_inactive: Yup.number(),
-      //   product_family: Yup.number(),
-      //   category: Yup.number(),
-      //   sub_category: Yup.number(),
-      // });
+      console.log('order', order?.id, data);
+      // data.order_detail.map((detail: any) => {
+      //   const schema = Yup.object().shape({
+      //     quantity: Yup.number().min(0.25, 'Quantidade mínima não aceita.'),
+      //   });
 
-      // await schema.validate(data, {
-      //   abortEarly: false,
+      //   await schema.validate(data, {
+      //     abortEarly: false,
+      //   });
+      //   return detail;
       // });
 
       const token = localStorage.getItem('@Massas:token');
@@ -107,16 +139,16 @@ const OrderEdit: React.FC = () => {
         throw new Error('Token não informado.');
       }
 
-      // await api.put(`/products/${product?.id}`, data, {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
+      await api.put(`/orders/${order?.id}`, data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      history.push('/');
+      history.push('/orders');
 
       addToast({
         type: 'success',
-        title: 'Alteração no produto realizada!',
-        description: 'Produto alterado conforme solicitado.',
+        title: 'Alteração no pedido realizada!',
+        description: 'Pedido alterado conforme solicitado.',
       });
     } catch (err) {
       if (err instanceof Yup.ValidationError) {
@@ -127,8 +159,8 @@ const OrderEdit: React.FC = () => {
 
       addToast({
         type: 'error',
-        title: 'Erro na autualização do produto',
-        description: `Ocorreu erro ao atualizar o produto, cheque as informações.`,
+        title: 'Erro na autualização do pedido',
+        description: `Ocorreu erro ao atualizar o pedido, cheque as informações.`,
       });
     } finally {
       setLoading(false);
@@ -158,63 +190,88 @@ const OrderEdit: React.FC = () => {
             {order && (
               <Form
                 ref={formRef}
-                initialData={{ order }}
+                initialData={{ order, ordersdetail: order.ordersdetail }}
                 onSubmit={handleSubmit}
               >
-                {/* <h1>Alterar os dados do produto</h1>
-
-                <Input name="name" icon={FiShoppingBag} placeholder="Nome" />
-
+                <h1>Alterar os dados do pedido</h1>
+                <Input name="delivery_name" icon={FiUser} placeholder="Nome" />
                 <Input
-                  name="sales_price"
+                  name="delivery_mobile"
+                  icon={FiPhoneCall}
+                  placeholder="Celular"
+                />
+                <Input
+                  name="delivery_address1"
+                  icon={FiHome}
+                  placeholder="Endereço de entrega"
+                />
+                <Input
+                  name="delivery_address2"
+                  icon={FiHome}
+                  placeholder="Complemento"
+                />
+                <Input
+                  name="delivery_city"
+                  icon={FiHome}
+                  placeholder="Cidade"
+                />
+                <Input
+                  name="delivery_state"
+                  icon={FiHome}
+                  placeholder="Estado"
+                />
+                <Input
+                  name="delivery_zip_code"
+                  icon={FiHome}
+                  placeholder="CEP"
+                />
+                <Input
+                  name="delivery_date"
+                  icon={FiCalendar}
+                  placeholder="R$"
+                />
+                <Input
+                  name="delivery_time"
+                  icon={FiCalendar}
+                  placeholder="R$"
+                />
+                <Input
+                  name="order_total"
                   icon={FiDollarSign}
                   placeholder="R$"
                 />
 
-                <Input name="unit" icon={FiSettings} placeholder="Unidade" />
-
-                <Input
-                  name="amount"
-                  icon={FiLayers}
-                  placeholder="Quantidade em estoque"
-                />
-
-                <Input
-                  name="is_inactive"
-                  icon={FiBellOff}
-                  placeholder="Produto inativo? (1-sim 0-não)"
-                />
-
-                <Input
-                  name="product_family"
-                  icon={FiTag}
-                  placeholder="Família do produto (ex.: 1-massas, 2-molhos,...)"
-                />
-
-                <Input
-                  name="category"
-                  icon={FiTag}
-                  placeholder="Categoria (ex.: 1-Lasanha, 2-Nhoque, ...)"
-                />
-                <Input
-                  name="sub_category"
-                  icon={FiTag}
-                  placeholder="Sub categoria (ex.: 1-Lasanha bolonhesa, ...)"
-                />
+                {order.ordersdetail &&
+                  order.ordersdetail.map((ordersdetail, index) => (
+                    <OrderDetail>
+                      <h3>Produto</h3>
+                      <Input
+                        name={`ordersdetail[${index}].quantity`}
+                        icon={FiShoppingCart}
+                        placeholder="Quantidade"
+                      />
+                      <Input
+                        name={`ordersdetail[${index}].amount`}
+                        icon={FiPlusSquare}
+                        placeholder="Estoque"
+                      />
+                      <Input
+                        name={`ordersdetail[${index}].sales_price`}
+                        icon={FiDollarSign}
+                        placeholder="Preço de venda"
+                      />
+                    </OrderDetail>
+                  ))}
 
                 <Button type="submit" loading={loading}>
                   Confirmar
                 </Button>
-                <Link to="/home">
+                <Link to="/orders">
                   <FiLogOut />
-                  Retornar a lista de produtos
-                </Link> */}
+                  Retornar a lista de pedidos
+                </Link>
               </Form>
             )}
-
-            {/* {product?.avatar_url ? (
-              <img src={product.avatar_url} alt={product.name} />
-            ) : null} */}
           </Aside>
         </AnimationContainer>
       </Content>

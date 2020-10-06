@@ -84,7 +84,7 @@ export const SearchBox = styled.div`
   margin: 20px 20px 0 860px;
 
   transform: translate(-50%, -50%);
-  background: #ffc780;
+  background: #ffe5b4;
   height: 40px;
   border-radius: 40px;
   padding: 10px;
@@ -123,7 +123,7 @@ export const SearchButton = styled.button`
   height: 40px;
   border-radius: 50%;
   border: 0;
-  background: #ffc780;
+  background: #ffe5b4;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,7 +136,7 @@ export const ProductView = styled.div`
   display: flex;
   padding: 12px 12px;
   border-radius: 10px;
-  background: #fff9f2;
+  background: #ffe5b4;
   opacity: 0.8;
   margin: 10px;
 
@@ -229,7 +229,8 @@ export const ProductDetail = styled.div`
   align-items: center;
 
   div {
-    background: #e8e6e6;
+    /* background: #e8e6e6; */
+    background: #ffefd5;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -255,7 +256,7 @@ export const ActiveButton = styled.button`
   top: 40px;
   right: 20px;
   border: 0;
-  background: #fff9f2;
+  background: #ffe5b4;
   width: 64px;
   height: 64px;
   cursor: pointer;

@@ -10,6 +10,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 import ProductEdit from '../pages/ProductEdit';
 import Order from '../pages/Orders';
+import OrderEdit from '../pages/OrderEdit';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -21,6 +22,7 @@ const Routes: React.FC = () => (
     <Route path="/home" component={Home} isPrivate />
     <Route path="/product" component={ProductEdit} isPrivate />
     <Route path="/orders" component={Order} isPrivate />
+    <Route path="/orderedit" component={OrderEdit} isPrivate />
   </Switch>
 );
 

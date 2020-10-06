@@ -22,7 +22,7 @@ export const Order = styled.div`
   padding-top: 15px;
   border-top: 2px solid rgba(255, 255, 255, 0.9);
   min-width: 970px;
-  background: linear-gradient(to bottom right, #ff9000, #fff7de);
+  background: linear-gradient(to bottom right, #ffa805, #ffd17a);
 
   p {
     font-family: 'RobotoSlab-Regular';
@@ -53,7 +53,6 @@ export const Order = styled.div`
     border: 0;
     background: none;
     color: ${lighten(0.2, '#7159c1')};
-    /* padding: 0 5px; */
     margin: 0 45px;
   }
 `;
@@ -75,16 +74,25 @@ export const ButtonSection = styled.div`
   display: flex;
   justify-content: space-around;
   opacity: 0.5;
-  border: 1px solid #fff;
 
   margin: 5px;
   padding: 5px;
   border-radius: 4px;
+
+  a {
+    margin-top: 12px;
+    display: flex;
+    justify-content: column;
+  }
+
+  p {
+    color: #fff;
+  }
 `;
 
 export const Delivery = styled.div`
   width: 200px;
-  background: #d85d10;
+  background: #ffa500;
   border-radius: 6px;
 `;
 

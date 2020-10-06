@@ -187,3 +187,14 @@ export const Aside = styled.div`
     padding: 60px 60px;
   }
 `;
+
+export const OrderDetail = styled.div`
+  flex-grow: 0 1;
+  margin: 10px;
+  min-width: 280px;
+
+  h3 {
+    color: #ff9000;
+    padding: 10px;
+  }
+`;

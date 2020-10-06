@@ -28,7 +28,7 @@ interface OrderDetail {
   quantity: number;
 }
 
-interface OrderProps {
+export interface OrderProps {
   id: string;
   delivery_name: string;
   delivery_mobile: string;
@@ -91,21 +91,28 @@ const Orders: React.FC = () => {
                 <Label>Contato:</Label>
                 <time>{order.delivery_mobile}</time>
                 <ButtonSection>
-                  <Link
-                    to={{
-                      pathname: '/product',
-                      state: order,
-                    }}
-                  >
-                    <FiEdit size={22} style={{ color: '#f7ff56' }} />
-                  </Link>
-                  <Link
-                    to={{
-                      pathname: '/home',
-                    }}
-                  >
-                    <FiCheckSquare size={22} style={{ color: '#94fc13' }} />
-                  </Link>
+                  <div>
+                    <Link
+                      to={{
+                        pathname: '/orderedit',
+                        state: order,
+                      }}
+                    >
+                      <FiEdit size={22} style={{ color: '#f7ff56' }} />
+                    </Link>
+                    <p>alterar</p>
+                  </div>
+
+                  <div>
+                    <Link
+                      to={{
+                        pathname: '/home',
+                      }}
+                    >
+                      <FiCheckSquare size={22} style={{ color: '#478559' }} />
+                    </Link>
+                    <p>confirmar</p>
+                  </div>
                 </ButtonSection>
               </OrderDetail>
               <OrderDetail>
