@@ -1,14 +1,14 @@
 import React, { useRef, useEffect, useState } from 'react';
 import {
   FiLogOut,
-  FiShoppingBag,
-  FiTag,
-  FiSettings,
+  // FiShoppingBag,
+  // FiTag,
+  // FiSettings,
   FiDollarSign,
-  FiLayers,
-  FiBellOff,
+  // FiLayers,
+  // FiBellOff,
   FiPhoneCall,
-  FiBookOpen,
+  // FiBookOpen,
   FiCalendar,
   FiShoppingCart,
   FiPlusSquare,
@@ -77,7 +77,7 @@ const OrderEdit: React.FC = () => {
   const { user } = useAuth();
 
   const [order, setOrder] = useState<OrderProps | null>(null);
-  const [orderDetail, setOrderDetail] = useState<OrderDetail[]>([]);
+
   const [loading, setLoading] = useState(false);
 
   const formRef = useRef<FormHandles>(null);
@@ -98,7 +98,7 @@ const OrderEdit: React.FC = () => {
       delivery_date: order?.delivery_date,
       delivery_time: order?.delivery_time,
       order_total: order?.order_total,
-      orderDetail,
+      ordersdetail: order?.ordersdetail,
     });
   }, [
     order?.delivery_address1,
@@ -111,7 +111,7 @@ const OrderEdit: React.FC = () => {
     order?.delivery_time,
     order?.delivery_zip_code,
     order?.order_total,
-    orderDetail,
+    order?.ordersdetail,
     state,
   ]);
 
@@ -121,7 +121,7 @@ const OrderEdit: React.FC = () => {
 
       formRef.current?.setErrors({});
 
-      console.log('order', order?.id, data);
+      // console.log('order', order?.id, data);
       // data.order_detail.map((detail: any) => {
       //   const schema = Yup.object().shape({
       //     quantity: Yup.number().min(0.25, 'Quantidade mínima não aceita.'),
