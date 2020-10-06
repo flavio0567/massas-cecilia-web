@@ -85,6 +85,7 @@ const Home: React.FC = () => {
       (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
     );
     setSelected(newSelection);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products?.filter, query, products]);
 
   const handleActivateProduct = useCallback(
