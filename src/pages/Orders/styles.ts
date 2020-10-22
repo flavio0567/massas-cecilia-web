@@ -22,7 +22,7 @@ export const Order = styled.div`
   padding-top: 15px;
   border-top: 2px solid rgba(255, 255, 255, 0.9);
   min-width: 970px;
-  background: linear-gradient(to bottom right, #ffa805, #ffd17a);
+  background: linear-gradient(to bottom left, #fff0c2, #ffd17a);
 
   p {
     font-family: 'RobotoSlab-Regular';
@@ -73,7 +73,6 @@ export const Label = styled.h1`
 export const ButtonSection = styled.div`
   display: flex;
   justify-content: space-around;
-  opacity: 0.5;
 
   margin: 5px;
   padding: 5px;
@@ -86,13 +85,14 @@ export const ButtonSection = styled.div`
   }
 
   p {
-    color: #fff;
+    color: #312e38;
+    opacity: 0.7;
   }
 `;
 
 export const Delivery = styled.div`
   width: 200px;
-  background: #ffa500;
+  background: #e97171;
   border-radius: 6px;
 `;
 

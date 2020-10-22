@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { format } from 'date-fns';
 
 import { FiEdit, FiCheckSquare } from 'react-icons/fi';
@@ -19,7 +19,24 @@ import {
   Detail,
 } from './styles';
 
+interface ProductProps {
+  id: string;
+  code: string;
+  name: string;
+  sales_price: string;
+  unit: string;
+  barcode: string;
+  ncm: 49029000;
+  amount: number;
+  product_family: number;
+  category: number;
+  sub_category: number;
+  is_inactive: number;
+  avatar: string;
+}
+
 interface OrderDetail {
+  id: string;
   order_id: string;
   product_id: string;
   sales_price: number;
@@ -49,6 +66,9 @@ export interface OrderProps {
 
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<OrderProps[]>([]);
+  const [details, setDetails] = useState<ProductProps[]>([]);
+
+  const token = localStorage.getItem('@Massas:token');
 
   useEffect(() => {
     async function loadOrders() {
@@ -69,6 +89,21 @@ const Orders: React.FC = () => {
     }
     loadOrders();
   }, []);
+
+  async function getName(orderdetail_id: string) {
+    api
+      .get(`ordersdetail/${orderdetail_id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        const updateProductName = orders.map((o: any) =>
+          o.id === orderdetail_id ? { ...o, name: res.data.product.name } : o,
+        );
+
+        console.log(updateProductName);
+        setDetails(res.data.product.name);
+      });
+  }
 
   return (
     <Container>
@@ -98,7 +133,7 @@ const Orders: React.FC = () => {
                         state: order,
                       }}
                     >
-                      <FiEdit size={22} style={{ color: '#f7ff56' }} />
+                      <FiEdit size={30} style={{ color: '#f7ff56' }} />
                     </Link>
                     <p>alterar</p>
                   </div>
@@ -109,7 +144,7 @@ const Orders: React.FC = () => {
                         pathname: '/home',
                       }}
                     >
-                      <FiCheckSquare size={22} style={{ color: '#478559' }} />
+                      <FiCheckSquare size={30} style={{ color: '#478559' }} />
                     </Link>
                     <p>confirmar</p>
                   </div>
@@ -138,7 +173,7 @@ const Orders: React.FC = () => {
               <OrderDetail>
                 {order.ordersdetail &&
                   order.ordersdetail.map((order_detail) => (
-                    <Detail>
+                    <Detail key={order_detail.id}>
                       <Label>Produto: {}</Label>
                       <p>
                         Quantidade: <span>{order_detail.quantity}</span>
@@ -150,6 +185,12 @@ const Orders: React.FC = () => {
                       <p>
                         Preço de venda: <span>R{order_detail.sales_price}</span>{' '}
                       </p>
+                      <button
+                        type="button"
+                        onClick={() => getName(order_detail.id)}
+                      >
+                        Name : {details}
+                      </button>
                     </Detail>
                   ))}
               </OrderDetail>

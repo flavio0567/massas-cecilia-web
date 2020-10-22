@@ -17,7 +17,7 @@ const Routes: React.FC = () => (
     <Route path="/" exact component={SignIn} />
     <Route path="/signup" component={SignUp} />
     <Route path="/forgot-password" component={ForgotPassword} />
-    <Route path="/reset-password" component={ResetPassword} />
+    {/* <Route path="/reset-password" component={ResetPassword} /> */}
 
     <Route path="/home" component={Home} isPrivate />
     <Route path="/product" component={ProductEdit} isPrivate />
