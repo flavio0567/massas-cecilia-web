@@ -212,7 +212,9 @@ const ProductEdit: React.FC = () => {
               </Form>
             )}
 
-            {product?.avatar_url ? <img src={product.avatar_url} /> : null}
+            {product?.avatar_url ? (
+              <img src={product.avatar_url} alt={product.name} />
+            ) : null}
           </Aside>
         </AnimationContainer>
       </Content>

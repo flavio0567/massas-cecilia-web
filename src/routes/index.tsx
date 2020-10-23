@@ -7,7 +7,7 @@ import Home from '../pages/Home';
 import SignIn from '../pages/Signin';
 import SignUp from '../pages/SignUp';
 import ForgotPassword from '../pages/ForgotPassword';
-import ResetPassword from '../pages/ResetPassword';
+// import ResetPassword from '../pages/ResetPassword';
 import ProductEdit from '../pages/ProductEdit';
 import Order from '../pages/Orders';
 import OrderEdit from '../pages/OrderEdit';

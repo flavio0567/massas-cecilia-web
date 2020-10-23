@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
 import { FiEdit, FiCheckSquare } from 'react-icons/fi';
