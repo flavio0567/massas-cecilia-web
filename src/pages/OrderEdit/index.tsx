@@ -108,7 +108,7 @@ const OrderEdit: React.FC = () => {
 
   useEffect(() => {
     fetchData()
-  }, []);
+  }, [fetchData]);
 
   //   setOrder(state);
 
