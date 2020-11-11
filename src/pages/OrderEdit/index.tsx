@@ -117,7 +117,7 @@ const OrderEdit: React.FC = () => {
     order?.order_total,
     order?.ordersdetail,
     state,
-    // order,
+    order,
   ]);
 
   async function handleSubmit(data: OrderProps) {
