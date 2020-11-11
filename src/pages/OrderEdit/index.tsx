@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import {
   FiLogOut,
   FiPhoneCall,
@@ -80,50 +80,48 @@ const OrderEdit: React.FC = () => {
 
   const history = useHistory();
 
-  function fetchData() {
-    setOrder(state);
-
-    formRef.current?.setData({
-      delivery_name: order?.delivery_name,
-      delivery_mobile: order?.delivery_mobile,
-      delivery_address1: order?.delivery_address1,
-      delivery_address2: order?.delivery_address2,
-      delivery_city: order?.delivery_city,
-      delivery_state: order?.delivery_state,
-      delivery_zip_code: order?.delivery_zip_code,
-      delivery_date: order?.delivery_date,
-      delivery_time: order?.delivery_time,
-      order_total: order?.order_total,
-      ordersdetail: order?.ordersdetail.map((detail: any) => {
-        return {
-          ...(detail as Object),
-          sales_price: Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(detail.sales_price.replace('$', '')),
-        };
-      }),
-    });
-  }
-
   useEffect(() => {
+    function fetchData() {
+      setOrder(state);
+
+      formRef.current?.setData({
+        delivery_name: order?.delivery_name,
+        delivery_mobile: order?.delivery_mobile,
+        delivery_address1: order?.delivery_address1,
+        delivery_address2: order?.delivery_address2,
+        delivery_city: order?.delivery_city,
+        delivery_state: order?.delivery_state,
+        delivery_zip_code: order?.delivery_zip_code,
+        delivery_date: order?.delivery_date,
+        delivery_time: order?.delivery_time,
+        order_total: order?.order_total,
+        ordersdetail: order?.ordersdetail.map((detail: any) => {
+          return {
+            ...(detail as Object),
+            sales_price: Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+            }).format(detail.sales_price.replace('$', '')),
+          };
+        }),
+      });
+  }
     fetchData()
-  }, [fetchData]);
-  // }, [
-  //   order?.delivery_address1,
-  //   order?.delivery_address2,
-  //   order?.delivery_city,
-  //   order?.delivery_date,
-  //   order?.delivery_mobile,
-  //   order?.delivery_name,
-  //   order?.delivery_state,
-  //   order?.delivery_time,
-  //   order?.delivery_zip_code,
-  //   order?.order_total,
-  //   order?.ordersdetail,
-  //   state,
-  //   order,
-  // ]);
+  }, [
+    order?.delivery_address1,
+    order?.delivery_address2,
+    order?.delivery_city,
+    order?.delivery_date,
+    order?.delivery_mobile,
+    order?.delivery_name,
+    order?.delivery_state,
+    order?.delivery_time,
+    order?.delivery_zip_code,
+    order?.order_total,
+    order?.ordersdetail,
+    state,
+    order,
+  ]);
 
   async function handleSubmit(data: OrderProps) {
     try {
