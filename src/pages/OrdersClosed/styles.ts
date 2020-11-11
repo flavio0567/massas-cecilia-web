@@ -22,7 +22,7 @@ export const Order = styled.div`
   padding-top: 15px;
   border-top: 2px solid rgba(255, 255, 255, 0.9);
   min-width: 1300px;
-  background: linear-gradient(to bottom left, #fff0c2, #ffd17a);
+  background: linear-gradient(to bottom left, #fff, #999999);
 
   p {
     font-family: 'RobotoSlab-Regular';
@@ -74,6 +74,7 @@ export const Label = styled.h1`
   color: #d85d10;
   font-family: 'RobotoSlab-Medium';
   font-size: 20px;
+  /* font-weight: bold; */
 `;
 
 export const ButtonSection = styled.div`
@@ -99,7 +100,7 @@ export const ButtonSection = styled.div`
 
 export const Delivery = styled.div`
   width: 200px;
-  background: #e97171;
+  background: #777777;
   border-radius: 6px;
   padding: 5px;
 `;
@@ -108,7 +109,7 @@ export const Loja = styled.div`
   display: flex;
   justify-content: center;
   width: 200px;
-  background: #d2f6c5;
+  background: #f4f4f2;
   border-radius: 6px;
 `;
 
@@ -117,3 +118,5 @@ export const Detail = styled.div`
     margin-left: 10px;
   }
 `;
+
+export const SearchButton = styled.button``;

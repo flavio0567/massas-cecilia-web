@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
-import { FiEdit3, FiCheckCircle } from 'react-icons/fi';
 import { MdChevronLeft } from 'react-icons/md';
-import { Link, useHistory } from 'react-router-dom';
-import { useToast } from '../../hooks/toast';
+import { Link } from 'react-router-dom';
+
 import api from '../../services/api';
 
 import {
@@ -14,10 +13,11 @@ import {
   Order,
   OrderDetail,
   Label,
-  ButtonSection,
+  // ButtonSection,
   Loja,
   Delivery,
   Detail,
+  // SearchButton,
 } from './styles';
 
 interface OrderDetail {
@@ -49,20 +49,14 @@ export interface OrderProps {
   date: Date;
 }
 
-interface DetailProps {
-  id: string;
-  name: string;
-}
-
-const Orders: React.FC = () => {
+const OrdersClosed: React.FC = () => {
   const [orders, setOrders] = useState<OrderProps[]>([]);
-  const { addToast } = useToast();
-  const history = useHistory();
+
   const token = localStorage.getItem('@Massas:token');
 
   useEffect(() => {
     async function loadOrders() {
-      const response = await api.get('orders', {
+      const response = await api.get('ordersclosed', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -81,28 +75,6 @@ const Orders: React.FC = () => {
     loadOrders();
   }, [token]);
 
-  const handleOrderClosed = useCallback(
-    async (id: string) => {
-      console.log('o =>', id, token);
-      await api
-        .patch(`ordersclosed/${id}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          console.log('res.data:', res.data);
-        });
-
-      addToast({
-        type: 'success',
-        title: 'Confirmar Pedido!',
-        description: 'Pedido confirmado conforme solicitado.',
-      });
-
-      history.push('/home');
-    },
-    [history, token, addToast],
-  );
-
   return (
     <Container>
       <Header>
@@ -114,9 +86,9 @@ const Orders: React.FC = () => {
           <MdChevronLeft size={36} color="#ff9000" />
         </Link>
         <Label style={{ marginLeft: 60, fontSize: 30 }}>
-          Pedidos Abertos{' '}
+          Pedidos Fechados{' '}
           <span role="img" aria-label="order">
-            🍝
+            👍
           </span>
         </Label>
       </Header>
@@ -129,39 +101,6 @@ const Orders: React.FC = () => {
                 <time>{order.delivery_name}</time>
                 <Label>Contato:</Label>
                 <time>{order.delivery_mobile}</time>
-                <ButtonSection>
-                  <div>
-                    <Link
-                      to={{
-                        pathname: '/orderedit',
-                        state: order,
-                      }}
-                    >
-                      <FiEdit3
-                        size={30}
-                        style={{ color: '#f7ff56', margin: 10 }}
-                      />
-                    </Link>
-                    <p>Alterar pedido</p>
-                  </div>
-
-                  <div>
-                    <button
-                      onClick={() => handleOrderClosed(order.id)}
-                      type="submit"
-                    >
-                      <FiCheckCircle
-                        size={30}
-                        style={{
-                          color: '#478559',
-                          marginTop: 26,
-                          marginLeft: -60,
-                        }}
-                      />
-                    </button>
-                    <p>Finalizar pedido</p>
-                  </div>
-                </ButtonSection>
               </OrderDetail>
               <OrderDetail>
                 <Label>Endereço da entrega:</Label>
@@ -223,4 +162,4 @@ const Orders: React.FC = () => {
   );
 };
 
-export default Orders;
+export default OrdersClosed;

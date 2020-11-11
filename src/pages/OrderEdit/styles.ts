@@ -2,11 +2,11 @@ import styled, { keyframes } from 'styled-components';
 import { shade } from 'polished';
 
 export const Container = styled.div`
-  height: 100vh;
+  height: 40vh;
 
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: stretch; */
 `;
 
 export const Header = styled.div`
@@ -62,12 +62,6 @@ export const Profile = styled.div`
 `;
 
 export const Content = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  margin: 20px 300px;
   svg {
     margin-right: 16px;
   }
@@ -104,13 +98,9 @@ export const AnimationContainer = styled.div`
   animation: ${appearFromLeft} 1.2s;
 
   form {
-    margin-top: -50px;
-    width: 540px;
-    text-align: center;
-
     h1 {
       color: #ff9000;
-      margin: 50px 0 4px;
+      /* margin: 50px 0 4px; */
       padding: 10px;
     }
 
@@ -178,23 +168,31 @@ export const AnimationContainer = styled.div`
     }
   }
 `;
+
 export const Aside = styled.div`
   display: flex;
-
-  img {
-    width: 400px;
-    height: 400px;
-    padding: 60px 60px;
-  }
 `;
 
 export const OrderDetail = styled.div`
   flex-grow: 0 1;
   margin: 10px;
-  min-width: 280px;
+  /* min-width: 280px; */
 
   h3 {
     color: #ff9000;
     padding: 10px;
   }
+`;
+
+export const LeftSide = styled.div`
+  /* background-color: yellow; */
+  padding: 10px;
+  min-width: 480px;
+`;
+
+export const RightSide = styled.div`
+  /* background-color: purple; */
+  margin-top: 60px;
+  padding: 10px;
+  min-width: 380px;
 `;

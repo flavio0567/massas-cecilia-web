@@ -132,7 +132,8 @@ const Home: React.FC = () => {
       <Header>
         <nav>
           <img src={logoIMG} alt="logo massas" />
-          <Link to="/orders">PEDIDOS</Link>
+          <Link to="/orders">PEDIDOS ABERTOS</Link>
+          <Link to="/ordersclosed">PEDIDOS FECHADOS</Link>
         </nav>
         <Notifications />
         <aside>

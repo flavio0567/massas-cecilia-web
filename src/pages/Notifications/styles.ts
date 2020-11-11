@@ -78,6 +78,8 @@ export const Notification = styled.div<ButtonProps>`
   }
 
   p {
+    color: #312e38;
+    opacity: 0.7;
     font-size: 20px;
     line-height: 23px;
   }

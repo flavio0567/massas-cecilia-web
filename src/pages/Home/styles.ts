@@ -5,8 +5,8 @@ export const Container = styled.div``;
 export const Header = styled.div`
   position: relative;
   height: 84px;
-  max-width: 900px;
-  min-width: 900px;
+  max-width: 1000px;
+  min-width: 1000px;
   margin: 0 auto;
 
   display: flex;
@@ -17,16 +17,19 @@ export const Header = styled.div`
 
   nav {
     display: flex;
+    justify-content: space-evenly;
     align-items: center;
 
     img {
       height: 260px;
-      margin: 0 20px 70px;
+      margin-bottom: 70px;
     }
 
     a {
+      font-size: 14px;
       font-weight: bold;
       color: #fff;
+      padding-left: 10px;
     }
   }
 
