@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {
   FiLogOut,
   FiPhoneCall,
@@ -80,7 +80,7 @@ const OrderEdit: React.FC = () => {
 
   const history = useHistory();
 
-  function fetchData() {
+  const fetchData = useCallback(() => {
     setOrder(state);
 
     formRef.current?.setData({
@@ -104,7 +104,21 @@ const OrderEdit: React.FC = () => {
         };
       }),
     });
-  }
+  }, [
+    order?.delivery_address1,
+    order?.delivery_address2,
+    order?.delivery_city,
+    order?.delivery_date,
+    order?.delivery_mobile,
+    order?.delivery_name,
+    order?.delivery_state,
+    order?.delivery_time,
+    order?.delivery_zip_code,
+    order?.order_total,
+    order?.ordersdetail,
+    state,
+    order,
+  ]);
 
   useEffect(() => {
     fetchData()
