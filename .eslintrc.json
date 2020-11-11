@@ -28,6 +28,7 @@
     "react/jsx-one-expression-per-line": "off",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
+    "eslint-plugin-react-hooks": "allow OptionalMemberExpression",
     "react/jsx-filename-extension": [
       1,
       {
