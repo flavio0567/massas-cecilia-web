@@ -104,7 +104,7 @@ const OrderEdit: React.FC = () => {
         };
       }),
     });
-  },[order, state]);
+  }, [order, state]);
 
   async function handleSubmit(data: OrderProps) {
     try {
@@ -117,12 +117,15 @@ const OrderEdit: React.FC = () => {
         delivery_mobile: Yup.string().required(
           'Número do celular obrigatório.',
         ),
-        delivery_address1: Yup.string().required('Endereço obrigatório.'),
-        delivery_city: Yup.string().required('Cidade obrigatória.'),
-        delivery_state: Yup.string().required('Estado obrigatório.'),
-        delivery_zip_code: Yup.string().required('CEP obrigatório.'),
+        delivery_address1: Yup.string(),
+        delivery_city: Yup.string(),
+        delivery_state: Yup.string(),
+        delivery_zip_code: Yup.string(),
         delivery_date: Yup.string().required('Data da entrega obrigatória.'),
         delivery_time: Yup.string().required('Horário da entrega obrigatório.'),
+        order_total: Yup.string().required(
+          'Valor total do pedido obrigatório.',
+        ),
       });
 
       await schema.validate(data, {

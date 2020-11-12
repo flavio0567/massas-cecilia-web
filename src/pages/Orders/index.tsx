@@ -182,7 +182,7 @@ const Orders: React.FC = () => {
                 <Label>Entregar em:</Label>
                 <time>{order.delivery_date}</time>
                 <time>{order.delivery_time}</time>
-                <Label>Preço sugerido do pedido:</Label>
+                <Label>Valor total do pedido:</Label>
                 <time> {order.order_total}</time>
               </OrderDetail>
               <OrderDetail>
