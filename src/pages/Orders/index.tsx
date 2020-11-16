@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { format } from 'date-fns';
 
-import { FiEdit3, FiCheckCircle } from 'react-icons/fi';
+import { FiCheckCircle } from 'react-icons/fi';
 import { MdChevronLeft } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 import { useToast } from '../../hooks/toast';
@@ -29,6 +29,7 @@ interface OrderDetail {
   amount: number;
   quantity: number;
   product_name: string;
+  packing: string;
 }
 
 export interface OrderProps {
@@ -83,7 +84,6 @@ const Orders: React.FC = () => {
 
   const handleOrderClosed = useCallback(
     async (id: string) => {
-      console.log('o =>', id, token);
       await api
         .patch(`ordersclosed/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
@@ -130,7 +130,7 @@ const Orders: React.FC = () => {
                 <Label>Contato:</Label>
                 <time>{order.delivery_mobile}</time>
                 <ButtonSection>
-                  <div>
+                  {/* <div>
                     <Link
                       to={{
                         pathname: '/orderedit',
@@ -143,7 +143,7 @@ const Orders: React.FC = () => {
                       />
                     </Link>
                     <p>Alterar pedido</p>
-                  </div>
+                  </div> */}
 
                   <div>
                     <button
@@ -190,7 +190,10 @@ const Orders: React.FC = () => {
                   order.ordersdetail.map((order_detail) => (
                     <Detail key={order_detail.id}>
                       {order_detail.product_name ? (
-                        <h2>{order_detail.product_name}</h2>
+                        <>
+                          <h2>{order_detail.product_name}</h2>
+                          <p>{order_detail.packing}</p>
+                        </>
                       ) : (
                         <Label>Nome do Produto</Label>
                       )}

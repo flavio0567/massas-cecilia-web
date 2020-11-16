@@ -149,7 +149,6 @@ const OrderEdit: React.FC = () => {
           };
         }),
       };
-      console.log('->', confirmedAlterOrder);
       const token = localStorage.getItem('@Massas:token');
 
       if (!token) {

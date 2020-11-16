@@ -62,7 +62,6 @@ const ProductEdit: React.FC = () => {
   useEffect(() => {
     setProduct(state);
 
-    console.log('produto', product);
     formRef.current?.setData({
       name: product?.name,
       sales_price: product?.sales_price,
