@@ -126,7 +126,7 @@ const ProductEdit: React.FC = () => {
 
       addToast({
         type: 'error',
-        title: 'Erro na autualização do produto',
+        title: 'Erro na atualização do produto',
         description: `Ocorreu erro ao atualizar o produto, cheque as informações.`,
       });
     } finally {
