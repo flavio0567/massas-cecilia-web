@@ -45,6 +45,7 @@ interface ProductFormData {
   avatar_url: string;
   sub_category: number;
   priceFormatted: string;
+  exception: number;
 }
 
 const Home: React.FC = () => {
@@ -160,8 +161,7 @@ const Home: React.FC = () => {
             type="text"
             value={query}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setQuery(e.currentTarget.value)
-            }
+              setQuery(e.currentTarget.value)}
           />
           <SearchButton type="submit" onClick={search}>
             <FiSearch />
@@ -209,6 +209,7 @@ const Home: React.FC = () => {
                       <span>Sub</span>
                       <span>Preço</span>
                       <span>Unidade</span>
+                      <span>Exceção</span>
                     </div>
 
                     <div>
@@ -217,6 +218,7 @@ const Home: React.FC = () => {
                       <span>{prod.sub_category}</span>
                       <span>{prod.priceFormatted}</span>
                       <span>{prod.unit}</span>
+                      {prod.exception ? <span>Sim</span> : <span>Não</span>}
                     </div>
                   </div>
                 </ProductDetail>

@@ -7,6 +7,7 @@ import {
   FiDollarSign,
   FiLayers,
   FiBellOff,
+  FiAlertTriangle,
 } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 
@@ -41,6 +42,7 @@ interface ProductFormData {
   unit: string;
   amount: number;
   is_inactive: number;
+  exception: number;
   product_family: number;
   category: number;
   sub_category: number;
@@ -68,6 +70,7 @@ const ProductEdit: React.FC = () => {
       unit: product?.unit,
       amount: product?.amount,
       is_inactive: product?.is_inactive,
+      exception: product?.exception,
       product_family: product?.product_family,
       sub_category: product?.sub_category,
       category: product?.category,
@@ -91,6 +94,7 @@ const ProductEdit: React.FC = () => {
         unit: Yup.string().required('Informe a unidade.'),
         amount: Yup.number().required('Informe algum valor para estoque.'),
         is_inactive: Yup.number(),
+        exception: Yup.number(),
         product_family: Yup.number(),
         category: Yup.number(),
         sub_category: Yup.number(),
@@ -182,6 +186,12 @@ const ProductEdit: React.FC = () => {
                   name="is_inactive"
                   icon={FiBellOff}
                   placeholder="Produto inativo? (1-sim 0-não)"
+                />
+
+                <Input
+                  name="exception"
+                  icon={FiAlertTriangle}
+                  placeholder="Exceção? (1-sim 0-não) Disponível apenas fds e/ou feriado "
                 />
 
                 <Input

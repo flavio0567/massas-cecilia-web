@@ -134,8 +134,8 @@ export const SearchButton = styled.button`
 `;
 
 export const ProductView = styled.div`
-  min-width: 840px;
-  max-width: 840px;
+  min-width: 940px;
+  max-width: 940px;
   display: flex;
   padding: 12px 12px;
   border-radius: 10px;
@@ -145,6 +145,7 @@ export const ProductView = styled.div`
 
   a {
     color: #532000;
+    padding-left: 40px;
   }
 
   span {
@@ -167,8 +168,8 @@ export const ProductView = styled.div`
 `;
 
 export const List = styled.div`
-  min-width: 780px;
-  max-width: 780px;
+  min-width: 840px;
+  max-width: 840px;
 `;
 
 export const Products = styled.div`
@@ -232,7 +233,6 @@ export const ProductDetail = styled.div`
   align-items: center;
 
   div {
-    /* background: #e8e6e6; */
     background: #ffefd5;
     flex-direction: row;
     justify-content: space-between;
