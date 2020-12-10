@@ -89,18 +89,32 @@ const Orders: React.FC = () => {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
-          console.log('res.data:', res.data);
+          console.log('res.data');
         });
+
+      const response = await api.get('orders', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const ordersFormatted = await response.data.map((order: any) => {
+        return {
+          ...(order as Object),
+          delivery_date: format(new Date(order.delivery_date), 'dd/MM/yyyy'),
+          order_total: Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          }).format(order.order_total.replace('$', '')),
+        };
+      });
+      setOrders(ordersFormatted);
 
       addToast({
         type: 'success',
-        title: 'Confirmar Pedido!',
-        description: 'Pedido confirmado conforme solicitado.',
+        title: 'Finalizar Pedido!',
+        description: 'Pedido finalizado com sucesso.',
       });
-
-      history.push('/home');
     },
-    [history, token, addToast],
+    [token, addToast],
   );
 
   return (
