@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 
 import { FiCheckCircle } from 'react-icons/fi';
 import { MdChevronLeft } from 'react-icons/md';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useToast } from '../../hooks/toast';
 import api from '../../services/api';
 
@@ -58,7 +58,6 @@ interface DetailProps {
 const Orders: React.FC = () => {
   const [orders, setOrders] = useState<OrderProps[]>([]);
   const { addToast } = useToast();
-  const history = useHistory();
   const token = localStorage.getItem('@Massas:token');
 
   useEffect(() => {
