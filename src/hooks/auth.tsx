@@ -43,7 +43,6 @@ const AuthProvider: React.FC = ({ children }) => {
     });
 
     const { token, user } = response.data;
-
     localStorage.setItem('@Massas:token', token);
     localStorage.setItem('@Massas:user', JSON.stringify(user));
 

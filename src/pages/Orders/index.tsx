@@ -48,6 +48,8 @@ export interface OrderProps {
   is_order_delivering: number;
   ordersdetail: OrderDetail[];
   date: Date;
+  payment_method: number;
+  paymentMethod: string;
 }
 
 interface DetailProps {
@@ -69,11 +71,8 @@ const Orders: React.FC = () => {
       const ordersFormatted = await response.data.map((order: any) => {
         return {
           ...(order as Object),
+          paymentMethod: order.payment_method !== 1 ? 'Cartão' : 'Dinheiro',
           delivery_date: format(new Date(order.delivery_date), 'dd/MM/yyyy'),
-          order_total: Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(order.order_total.replace('$', '')),
         };
       });
       setOrders(ordersFormatted);
@@ -196,7 +195,9 @@ const Orders: React.FC = () => {
                 <time>{order.delivery_date}</time>
                 <time>{order.delivery_time}</time>
                 <Label>Valor total do pedido:</Label>
-                <time> {order.order_total}</time>
+                <time> R{order.order_total}</time>
+                <Label>Forma de pagamento:</Label>
+                <time>{order.paymentMethod}</time>
               </OrderDetail>
               <OrderDetail>
                 {order.ordersdetail &&

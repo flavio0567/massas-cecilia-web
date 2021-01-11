@@ -13,11 +13,9 @@ import {
   Order,
   OrderDetail,
   Label,
-  // ButtonSection,
   Loja,
   Delivery,
   Detail,
-  // SearchButton,
 } from './styles';
 
 interface OrderDetail {
@@ -47,6 +45,8 @@ export interface OrderProps {
   is_order_delivering: number;
   ordersdetail: OrderDetail[];
   date: Date;
+  payment_method: number;
+  paymentMethod: string;
 }
 
 const OrdersClosed: React.FC = () => {
@@ -63,6 +63,7 @@ const OrdersClosed: React.FC = () => {
       const ordersFormatted = await response.data.map((order: any) => {
         return {
           ...(order as Object),
+          paymentMethod: order.payment_method !== 1 ? 'Cartão' : 'Dinheiro',
           delivery_date: format(new Date(order.delivery_date), 'dd/MM/yyyy'),
           order_total: Intl.NumberFormat('pt-BR', {
             style: 'currency',
@@ -123,6 +124,8 @@ const OrdersClosed: React.FC = () => {
                 <time>{order.delivery_time}</time>
                 <Label>Valor total do pedido:</Label>
                 <time> {order.order_total}</time>
+                <Label>Forma de pagamento:</Label>
+                <time>{order.paymentMethod}</time>
               </OrderDetail>
               <OrderDetail>
                 {order.ordersdetail &&

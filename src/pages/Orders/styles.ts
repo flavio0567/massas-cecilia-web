@@ -1,5 +1,10 @@
 import styled from 'styled-components';
+import { AllHTMLAttributes } from 'react';
 import { lighten } from 'polished';
+
+type ButtonProps = AllHTMLAttributes<HTMLButtonElement> & {
+  isOpen?: boolean;
+};
 
 export const Container = styled.div``;
 
@@ -116,4 +121,53 @@ export const Detail = styled.div`
   p {
     margin-left: 10px;
   }
+`;
+
+export const Badge = styled.div`
+  height: 60px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  background-color: #eee;
+  margin-top: 10px;
+
+  h3 {
+    margin-left: 20%;
+    color: #999999;
+    font-family: 'RobotoSlab-Medium';
+    font-size: 20px;
+  }
+
+  hr {
+    width: 100%;
+    height: 2px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #b7d0e2;
+  }
+`;
+
+export const Button = styled.button<ButtonProps>``;
+
+export const Agreement = styled.div`
+  height: 60px;
+  border: 1px solid gray;
+  border-radius: 10px;
+  background-color: #eee;
+  margin-top: 10px;
+`;
+
+export const CheckBoxAgreement = styled.button``;
+
+export const Checkbox = styled.text`
+  height: 22px;
+  width: 22px;
+  border-radius: 4px;
+  border-width: 1px;
+  border-color: #666360;
+`;
+
+export const TextAgreement = styled.text`
+  font-size: 16px;
+  color: #666;
+  margin: 15px;
 `;
