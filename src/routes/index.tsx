@@ -12,6 +12,7 @@ import ProductEdit from '../pages/ProductEdit';
 import Order from '../pages/Orders';
 import OrderEdit from '../pages/OrderEdit';
 import OrderClosed from '../pages/OrdersClosed';
+import Users from '../pages/Users';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -25,6 +26,7 @@ const Routes: React.FC = () => (
     <Route path="/orders" component={Order} isPrivate />
     <Route path="/orderedit" component={OrderEdit} isPrivate />
     <Route path="/ordersclosed" component={OrderClosed} isPrivate />
+    <Route path="/users" component={Users} isPrivate />
   </Switch>
 );
 

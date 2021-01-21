@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback, ChangeEvent } from 'react';
+
 import {
   FiPower,
   FiEdit,
@@ -6,11 +7,11 @@ import {
   FiBellOff,
   FiBell,
   FiCamera,
+  FiCheckSquare,
 } from 'react-icons/fi';
 
 import { Link } from 'react-router-dom';
 import Notifications from '../Notifications';
-
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
@@ -31,6 +32,7 @@ import {
   InputSearch,
   ProductDetail,
   ActiveButton,
+  ActionButtons,
 } from './styles';
 
 interface ProductFormData {
@@ -46,6 +48,7 @@ interface ProductFormData {
   sub_category: number;
   priceFormatted: string;
   exception: number;
+  amount: number;
 }
 
 const Home: React.FC = () => {
@@ -66,10 +69,10 @@ const Home: React.FC = () => {
       const productsFormatted = response.data.product.map((product: any) => {
         return {
           ...(product as Object),
-          priceFormatted: Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(product.sales_price),
+          // priceFormatted: Intl.NumberFormat('pt-BR', {
+          //   style: 'currency',
+          //   currency: 'BRL',
+          // }).format(product.sales_price),
         };
       });
       setSelected(productsFormatted);
@@ -86,8 +89,7 @@ const Home: React.FC = () => {
       (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
     );
     setSelected(newSelection);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products?.filter, query, products]);
+  }, [products?.filter, query]);
 
   const handleActivateProduct = useCallback(
     async (product: ProductFormData) => {
@@ -128,6 +130,80 @@ const Home: React.FC = () => {
     [addToast, token, loadProducts],
   );
 
+  const handleChangedSalesPrice = useCallback(
+    (e, product, index) => {
+      if (!products) {
+        throw new Error('Produto não encontrado.');
+      }
+
+      // const index = products.indexOf(product);
+
+      const newProductWithNewValue = { ...products[index] };
+
+      newProductWithNewValue.sales_price = Number(e.target.value);
+
+      const newListProducts = { ...products };
+
+      newListProducts[index] = newProductWithNewValue;
+
+      setProducts(newListProducts);
+    },
+    [products],
+  );
+
+  const handleChangedAmount = useCallback(
+    (e, product, index) => {
+      if (!products) {
+        throw new Error('Produto não encontrado.');
+      }
+
+      const newProductWithNewValue = { ...products[index] };
+
+      newProductWithNewValue.amount = Number(e.target.value);
+
+      const newListProducts = { ...products };
+
+      newListProducts[index] = newProductWithNewValue;
+
+      setProducts(newListProducts);
+    },
+    [products],
+  );
+
+  const handleSubmitChange = useCallback(
+    async (index) => {
+      if (!products) {
+        throw new Error('Produto não encontrado.');
+      }
+
+      try {
+        const product: ProductFormData = products[index];
+
+        const { sales_price, amount, name, unit } = product;
+
+        await api
+          .put(
+            `/products/${product.id}`,
+            { name, sales_price, amount, unit },
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            },
+          )
+          .then(() => {
+            addToast({
+              type: 'success',
+              title: 'Dados do produto atualizados!',
+            });
+          });
+      } catch (err) {
+        console.log(err.message);
+      }
+
+      loadProducts();
+    },
+    [addToast, loadProducts, products, token],
+  );
+
   return (
     <Container>
       <Header>
@@ -161,7 +237,8 @@ const Home: React.FC = () => {
             type="text"
             value={query}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setQuery(e.currentTarget.value)}
+              setQuery(e.currentTarget.value)
+            }
           />
           <SearchButton type="submit" onClick={search}>
             <FiSearch />
@@ -175,7 +252,7 @@ const Home: React.FC = () => {
           Massas da Cecilia
         </h1>
 
-        {selected?.map((prod) => (
+        {selected?.map((prod, index) => (
           <ProductView key={prod.id}>
             <List>
               <Products>
@@ -194,7 +271,7 @@ const Home: React.FC = () => {
                     <input
                       type="file"
                       id={prod.id}
-                      onChange={(e) => handleAvatarChange(prod.id, e)}
+                      onChange={(e) => handleAvatarChange(prod, e)}
                     />
                   </label>
 
@@ -206,8 +283,9 @@ const Home: React.FC = () => {
                     <div>
                       <span>Familia</span>
                       <span>Categoria</span>
-                      <span>Sub</span>
-                      <span>Preço</span>
+                      <span style={{ marginLeft: -10 }}>Sub</span>
+                      <span style={{ marginLeft: -30 }}>Preço</span>
+                      <span style={{ marginLeft: 10 }}>Estoque</span>
                       <span>Unidade</span>
                       <span>Exceção</span>
                     </div>
@@ -216,7 +294,31 @@ const Home: React.FC = () => {
                       <span>{prod.product_family}</span>
                       <span>{prod.category}</span>
                       <span>{prod.sub_category}</span>
-                      <span>{prod.priceFormatted}</span>
+                      <input
+                        defaultValue={prod.sales_price}
+                        onChange={(e) =>
+                          handleChangedSalesPrice(e, prod, index)
+                        }
+                        // style={{ marginLeft: 60 }}
+                      />
+                      <input
+                        defaultValue={prod.amount}
+                        style={{ marginLeft: 80 }}
+                        onChange={(e) => handleChangedAmount(e, prod, index)}
+                      />
+                      <ActiveButton
+                        style={{
+                          background: '#ffe5b4',
+                          position: 'relative',
+                          top: -70,
+                          right: -192,
+                        }}
+                        onClick={() => {
+                          handleSubmitChange(index);
+                        }}
+                      >
+                        <FiCheckSquare color="#532000" />
+                      </ActiveButton>
                       <span>{prod.unit}</span>
                       {prod.exception ? <span>Sim</span> : <span>Não</span>}
                     </div>
@@ -224,22 +326,28 @@ const Home: React.FC = () => {
                 </ProductDetail>
               </Products>
             </List>
-            <Link
-              to={{
-                pathname: '/product',
-                state: prod,
-              }}
-            >
-              <FiEdit />
-            </Link>
+            <ActionButtons>
+              <Link
+                to={{
+                  pathname: '/product',
+                  state: prod,
+                }}
+              >
+                <FiEdit color="#ff8400" />
+              </Link>
 
-            <ActiveButton
-              onClick={() => {
-                handleActivateProduct(prod);
-              }}
-            >
-              {prod.is_inactive ? <FiBellOff color="#ff0000" /> : <FiBell />}
-            </ActiveButton>
+              <ActiveButton
+                onClick={() => {
+                  handleActivateProduct(prod);
+                }}
+              >
+                {prod.is_inactive ? (
+                  <FiBellOff color="#ff0000" />
+                ) : (
+                  <FiBell color="#009900" />
+                )}
+              </ActiveButton>
+            </ActionButtons>
           </ProductView>
         ))}
       </Content>

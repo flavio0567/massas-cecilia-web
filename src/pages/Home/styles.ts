@@ -134,8 +134,8 @@ export const SearchButton = styled.button`
 `;
 
 export const ProductView = styled.div`
-  min-width: 940px;
-  max-width: 940px;
+  min-width: 1060px;
+  max-width: 1060px;
   display: flex;
   padding: 12px 12px;
   border-radius: 10px;
@@ -168,8 +168,8 @@ export const ProductView = styled.div`
 `;
 
 export const List = styled.div`
-  min-width: 840px;
-  max-width: 840px;
+  min-width: 880px;
+  max-width: 880px;
 `;
 
 export const Products = styled.div`
@@ -243,7 +243,12 @@ export const ProductDetail = styled.div`
     div {
       display: flex;
       flex-direction: row;
-      padding: 4px 8px;
+      padding: 2px 4px;
+    }
+
+    p {
+      color: #666;
+      margin-right: 3px;
     }
 
     span {
@@ -251,22 +256,36 @@ export const ProductDetail = styled.div`
       color: #666;
       font-family: 'RobotoSlab-Medium';
     }
+
+    input {
+      flex: 1;
+      height: 28px;
+      width: 60px;
+      background: #f4ede8;
+      border: 0;
+      border-radius: 5px;
+      color: #666;
+      font-family: 'RobotoSlab-Medium';
+      font-size: 16px;
+
+      &::placeholder {
+        color: #666360;
+      }
+    }
   }
 `;
 
+export const ActionButtons = styled.div`
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin: 0 15px;
+`;
+
 export const ActiveButton = styled.button`
-  position: relative;
-  top: 40px;
-  right: 20px;
   border: 0;
   background: #ffe5b4;
-  width: 64px;
-  height: 64px;
+  width: 35px;
+  height: 35px;
+  margin-left: 10px;
   cursor: pointer;
-
-  svg {
-    &:hover {
-      opacity: 0.2s;
-    }
-  }
 `;
