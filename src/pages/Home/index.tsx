@@ -308,8 +308,8 @@ const Home: React.FC = () => {
                         style={{
                           background: '#ffe5b4',
                           position: 'relative',
-                          top: -70,
-                          right: -192,
+                          top: -74,
+                          right: -190,
                         }}
                         onClick={() => {
                           handleSubmitChange(index);

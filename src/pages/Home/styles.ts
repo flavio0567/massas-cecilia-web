@@ -232,6 +232,11 @@ export const ProductDetail = styled.div`
   justify-content: space-between;
   align-items: center;
 
+  strong {
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
   div {
     background: #ffefd5;
     flex-direction: row;
