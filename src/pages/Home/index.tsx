@@ -89,7 +89,7 @@ const Home: React.FC = () => {
       (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
     );
     setSelected(newSelection);
-  }, [products?.filter, query]);
+  }, [query]);
 
   const handleActivateProduct = useCallback(
     async (product: ProductFormData) => {
@@ -237,8 +237,7 @@ const Home: React.FC = () => {
             type="text"
             value={query}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setQuery(e.currentTarget.value)
-            }
+              setQuery(e.currentTarget.value)}
           />
           <SearchButton type="submit" onClick={search}>
             <FiSearch />
@@ -297,8 +296,7 @@ const Home: React.FC = () => {
                       <input
                         defaultValue={prod.sales_price}
                         onChange={(e) =>
-                          handleChangedSalesPrice(e, prod, index)
-                        }
+                          handleChangedSalesPrice(e, prod, index)}
                         // style={{ marginLeft: 60 }}
                       />
                       <input
