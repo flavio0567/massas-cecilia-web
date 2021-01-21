@@ -89,7 +89,7 @@ const Home: React.FC = () => {
       (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
     );
     setSelected(newSelection);
-  }, [query]);
+  }, [products, query]);
 
   const handleActivateProduct = useCallback(
     async (product: ProductFormData) => {
