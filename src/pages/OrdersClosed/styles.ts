@@ -74,6 +74,7 @@ export const Label = styled.h1`
   color: #d85d10;
   font-family: 'RobotoSlab-Medium';
   font-size: 20px;
+  /* font-weight: bold; */
 `;
 
 export const ButtonSection = styled.div`
