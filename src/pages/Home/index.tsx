@@ -11,6 +11,7 @@ import {
 } from 'react-icons/fi';
 
 import { Link } from 'react-router-dom';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import Notifications from '../Notifications';
 import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
@@ -33,6 +34,8 @@ import {
   ProductDetail,
   ActiveButton,
   ActionButtons,
+  Pagination,
+  PaginationButton,
 } from './styles';
 
 interface ProductFormData {
@@ -62,11 +65,18 @@ const Home: React.FC = () => {
 
   const [selected, setSelected] = useState<ProductFormData[]>();
 
+  const [contentLength, setContentLength] = useState(0);
+
+  const [page, setPage] = useState(0);
+
+  const [limit, setLimit] = useState(5);
+
   const token = localStorage.getItem('@Massas:token');
 
   const loadProducts = useCallback(async () => {
-    await api.get('/products').then((response) => {
-      const productsFormatted = response.data.product.map((product: any) => {
+    await api.get('/products', { params: { page, limit } }).then((response) => {
+      setContentLength(response.data.product[1]);
+      const productsFormatted = response.data.product[0].map((product: any) => {
         return {
           ...(product as Object),
           // priceFormatted: Intl.NumberFormat('pt-BR', {
@@ -78,18 +88,27 @@ const Home: React.FC = () => {
       setSelected(productsFormatted);
       setProducts(productsFormatted);
     });
-  }, []);
+  }, [limit, page]);
 
   useEffect(() => {
     loadProducts();
-  }, [loadProducts]);
+  }, [loadProducts, page, limit]);
 
-  const search = useCallback(() => {
-    const newSelection = products?.filter(
-      (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
-    );
-    setSelected(newSelection);
-  }, [products, query]);
+  const search = useCallback(async () => {
+    // const newSelection = products?.filter(
+    //   (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
+    // );
+    if (!query) {
+      loadProducts();
+    } else {
+      const newSelection = await api.get('products/search', {
+        params: { like: query },
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setSelected(newSelection.data);
+      setProducts(newSelection.data);
+    }
+  }, [loadProducts, query, token]);
 
   const handleActivateProduct = useCallback(
     async (product: ProductFormData) => {
@@ -131,13 +150,10 @@ const Home: React.FC = () => {
   );
 
   const handleChangedSalesPrice = useCallback(
-    (e, product, index) => {
+    (e, prod, index) => {
       if (!products) {
         throw new Error('Produto não encontrado.');
       }
-
-      // const index = products.indexOf(product);
-
       const newProductWithNewValue = { ...products[index] };
 
       newProductWithNewValue.sales_price = Number(e.target.value);
@@ -198,10 +214,29 @@ const Home: React.FC = () => {
       } catch (err) {
         console.log(err.message);
       }
-
-      loadProducts();
     },
-    [addToast, loadProducts, products, token],
+    [addToast, products, token],
+  );
+
+  const handlePagination = useCallback(
+    async (p) => {
+      if (page === 0 && p > 0) {
+        setPage(page + p);
+      } else if (page > 0 && page <= Math.round(contentLength / limit)) {
+        setPage(page + p);
+      } else {
+        setPage(0);
+      }
+
+      const newPage = await api.get('products/', {
+        params: { page, limit },
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setContentLength(newPage.data.product[1]);
+      setSelected(newPage.data.product[0]);
+      setProducts(newPage.data.product[0]);
+    },
+    [contentLength, limit, page, token],
   );
 
   return (
@@ -250,6 +285,31 @@ const Home: React.FC = () => {
           </span>
           Massas da Cecilia
         </h1>
+        <Pagination>
+          <PaginationButton type="button" onClick={() => handlePagination(-1)}>
+            <MdChevronLeft size={36} color="#ff9000" />
+          </PaginationButton>
+          <PaginationButton type="button" onClick={() => handlePagination(1)}>
+            <MdChevronRight size={36} color="#ff9000" />
+          </PaginationButton>
+        </Pagination>
+        <input
+          placeholder="Limite"
+          onChange={(e) => {
+            const qtd = Number(e.target.value);
+            setLimit(qtd);
+          }}
+          value={limit}
+          style={{
+            marginLeft: 14,
+            marginTop: -31,
+            height: 20,
+            width: 26,
+            // fontWeight: 0.6,
+            color: '#312e38',
+            backgroundColor: '#ffe5b4',
+          }}
+        />
 
         {selected?.map((prod, index) => (
           <ProductView key={prod.id}>
@@ -308,7 +368,7 @@ const Home: React.FC = () => {
                         style={{
                           background: '#ffe5b4',
                           position: 'relative',
-                          top: -74,
+                          top: -72,
                           right: -190,
                         }}
                         onClick={() => {

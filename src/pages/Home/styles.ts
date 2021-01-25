@@ -28,7 +28,7 @@ export const Header = styled.div`
     a {
       font-size: 14px;
       font-weight: bold;
-      color: #fff;
+      color: #fff6da;
       padding-left: 10px;
     }
   }
@@ -289,6 +289,20 @@ export const ActionButtons = styled.div`
 export const ActiveButton = styled.button`
   border: 0;
   background: #ffe5b4;
+  width: 35px;
+  height: 35px;
+  margin-left: 10px;
+  cursor: pointer;
+`;
+
+export const Pagination = styled.div`
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+export const PaginationButton = styled.button`
+  border: 0;
+  background: #fff6da;
   width: 35px;
   height: 35px;
   margin-left: 10px;

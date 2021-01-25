@@ -19,7 +19,6 @@ const Users: React.FC = () => {
       const response = await api.get('users', {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(response.data.user[0].id);
       setUsers(response.data.user);
     }
     loadUsers();
@@ -87,9 +86,31 @@ const Users: React.FC = () => {
                       );
                     }}
                   >
+                    <option value="">Select o status</option>
+                    <option value={1}>Sim</option>
+                    <option value={0}>Não</option>
+                  </select>
+                  {/* <select
+                    style={{ margin: 10 }}
+                    value={user.is_admin === 0 ? 'Não' : 'Sim'}
+                    onChange={(e) => {
+                      let is_admin: number;
+                      if (e.target.value === 'Não') {
+                        is_admin = 1;
+                      } else {
+                        is_admin = 2;
+                      }
+                      setUsers((currentUser) =>
+                        produce(currentUser, (val: Users[]) => {
+                          // eslint-disable-next-line no-param-reassign
+                          val[index].is_admin = is_admin;
+                        }),
+                      );
+                    }}
+                  >
                     <option value="is_admin"> Não </option>
                     <option value="is_admin"> Sim </option>
-                  </select>
+                  </select> */}
                   <button type="submit" onClick={() => handleUser()}>
                     Confirmar
                   </button>
