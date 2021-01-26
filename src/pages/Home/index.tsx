@@ -69,7 +69,7 @@ const Home: React.FC = () => {
 
   const [page, setPage] = useState(0);
 
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(0);
 
   const token = localStorage.getItem('@Massas:token');
 
@@ -92,7 +92,8 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     loadProducts();
-  }, [loadProducts, page, limit]);
+    // setLimit(contentLength);
+  }, [loadProducts, page, limit, contentLength]);
 
   const search = useCallback(async () => {
     // const newSelection = products?.filter(
@@ -287,30 +288,30 @@ const Home: React.FC = () => {
         </h1>
         <Pagination>
           <PaginationButton type="button" onClick={() => handlePagination(-1)}>
-            <MdChevronLeft size={36} color="#ff9000" />
+            <MdChevronLeft size={42} color="#ff9000" />
           </PaginationButton>
+
           <PaginationButton type="button" onClick={() => handlePagination(1)}>
-            <MdChevronRight size={36} color="#ff9000" />
+            <MdChevronRight size={42} color="#ff9000" />
           </PaginationButton>
         </Pagination>
         <input
-          placeholder="Limite"
           onChange={(e) => {
-            const qtd = Number(e.target.value);
-            setLimit(qtd);
+            setLimit(Number(e.target.value));
           }}
           value={limit}
           style={{
-            marginLeft: 14,
-            marginTop: -31,
-            height: 20,
-            width: 26,
-            // fontWeight: 0.6,
-            color: '#312e38',
+            marginTop: -40,
+            marginLeft: 60,
+            height: 30,
+            width: 42,
+            fontSize: 18,
+            borderStyle: 'solid',
+            borderColor: '#ff9000',
+            color: '#ff9000',
             backgroundColor: '#ffe5b4',
           }}
         />
-
         {selected?.map((prod, index) => (
           <ProductView key={prod.id}>
             <List>
@@ -368,7 +369,7 @@ const Home: React.FC = () => {
                         style={{
                           background: '#ffe5b4',
                           position: 'relative',
-                          top: -72,
+                          top: -74,
                           right: -190,
                         }}
                         onClick={() => {

@@ -283,7 +283,7 @@ export const ProductDetail = styled.div`
 export const ActionButtons = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
-  margin: 0 15px;
+  margin: 0 17px;
 `;
 
 export const ActiveButton = styled.button`
@@ -296,8 +296,8 @@ export const ActiveButton = styled.button`
 `;
 
 export const Pagination = styled.div`
-  flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  align-items: center;
 `;
 
 export const PaginationButton = styled.button`
@@ -305,6 +305,6 @@ export const PaginationButton = styled.button`
   background: #fff6da;
   width: 35px;
   height: 35px;
-  margin-left: 10px;
+  margin-left: 50px;
   cursor: pointer;
 `;
