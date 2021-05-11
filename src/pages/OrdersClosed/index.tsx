@@ -89,7 +89,18 @@ const OrdersClosed: React.FC = () => {
         api.get(`ordersclosed/mobile/${deliveryMobile}`, {
           headers: { Authorization: `Bearer ${token}` },
         }).then((response) => {
-          setOrders(response.data);
+          const ordersFormatted = response.data.map((order: any) => {
+            return {
+              ...(order as Object),
+              paymentMethod: order.payment_method !== 1 ? 'Cartão' : 'Dinheiro',
+              delivery_date: format(new Date(order.delivery_date), 'dd/MM/yyyy'),
+              order_total: Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(order.order_total.replace('$', '')),
+            };
+          });
+          setOrders(ordersFormatted);
         });
       }
     }
