@@ -54,9 +54,7 @@ export interface OrderProps {
 }
 
 const OrdersClosed: React.FC = () => {
-  const [query, setQuery] = useState<string>();
   const [deliveryMobile, setDeliveryMobile] = useState<string>();
-  const [selected, setSelected] = useState<OrderProps[]>();
   const [orders, setOrders] = useState<OrderProps[]>([]);
 
   const token = localStorage.getItem('@Massas:token');
@@ -78,11 +76,11 @@ const OrdersClosed: React.FC = () => {
         });
         setOrders(ordersFormatted);
       });
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     loadOrders();
-  }, []);
+  }, [loadOrders]);
 
   const searchMobile = useCallback(async () => {
     if (!deliveryMobile) {
@@ -95,7 +93,7 @@ const OrdersClosed: React.FC = () => {
         });
       }
     }
-  }, [deliveryMobile, token]);
+  }, [deliveryMobile, token, loadOrders]);
 
   return (
     <Container>
