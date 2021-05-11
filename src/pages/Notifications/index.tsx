@@ -4,6 +4,8 @@ import { MdNotifications } from 'react-icons/md';
 import { parseISO, formatDistance } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
+import { useQuery, useQueryClient, QueryClient, QueryClientProvider } from 'react-query';
+
 import api from '../../services/api';
 
 import {
@@ -23,7 +25,7 @@ interface NotificationProps {
   read: boolean;
 }
 
-const Notifications: React.FC = () => {
+function NotificationsQuery() {
   const [visible, setVisible] = useState(false);
   const [notifications, setNotifications] = useState<NotificationProps[]>([]);
 
@@ -90,6 +92,16 @@ const Notifications: React.FC = () => {
       </NotificationList>
     </Container>
   );
+}
+
+const Notifications: React.FC = () => {
+  const queryClient = new QueryClient;
+  
+  return (
+    <QueryClientProvider client={queryClient}>
+      <NotificationsQuery />
+    </QueryClientProvider>
+  )
 };
 
 export default Notifications;

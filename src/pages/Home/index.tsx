@@ -56,23 +56,16 @@ interface ProductFormData {
 
 const Home: React.FC = () => {
   const { signOut, user } = useAuth();
-
   const [query, setQuery] = useState<string>();
-
+  const [familyQuery, setFamilyQuery] = useState<string>(); 
   const { addToast } = useToast();
-
   const [products, setProducts] = useState<ProductFormData[]>();
-
   const [selected, setSelected] = useState<ProductFormData[]>();
-
   const [contentLength, setContentLength] = useState(0);
-
   const [page, setPage] = useState(0);
-
   const [limit, setLimit] = useState(0);
-
   const token = localStorage.getItem('@Massas:token');
-
+ 
   const loadProducts = useCallback(async () => {
     await api.get('/products', { params: { page, limit } }).then((response) => {
       setContentLength(response.data.product[1]);
@@ -110,6 +103,18 @@ const Home: React.FC = () => {
       setProducts(newSelection.data);
     }
   }, [loadProducts, query, token]);
+
+  const searchFamily = useCallback(async () => {
+    if (!familyQuery) {
+      loadProducts();
+    } else {
+      const newSelection = await api.get(`products/all-in-family/${familyQuery}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setSelected(newSelection.data);
+      setProducts(newSelection.data);
+    }
+  }, [loadProducts, familyQuery, token]);
 
   const handleActivateProduct = useCallback(
     async (product: ProductFormData) => {
@@ -267,6 +272,7 @@ const Home: React.FC = () => {
       </Header>
 
       <Content>
+      <p style={{ color: '#999', paddingLeft: 650, paddingTop: 3 }}>Pesquisar Produto</p>
         <SearchBox>
           <InputSearch
             name="query"
@@ -275,10 +281,28 @@ const Home: React.FC = () => {
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setQuery(e.currentTarget.value)}
           />
-          <SearchButton type="submit" onClick={search}>
+          <SearchButton type="submit" onClick={search} onChange={(e) => {
+            setQuery(e.currentTarget.value);
+          }}>
             <FiSearch />
           </SearchButton>
         </SearchBox>
+
+        <p style={{ color: '#999', paddingLeft: 650 }}>Pesquisar Família</p>
+        <SearchBox>
+          <InputSearch
+            type="text"
+            name="family"
+            value={familyQuery}
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              setFamilyQuery(e.currentTarget.value)} />
+            <SearchButton type="submit" onClick={searchFamily} onChange={(e) => {
+              setFamilyQuery(e.currentTarget.value);
+            }}>
+            <FiSearch />
+          </SearchButton>
+        </SearchBox>
+
         <h1>
           Lista de Produtos
           <span role="img" aria-label="mobile">
@@ -341,7 +365,7 @@ const Home: React.FC = () => {
                   <strong>{prod.name}</strong>
                   <div>
                     <div>
-                      <span>Familia</span>
+                      <span>Família</span>
                       <span>Categoria</span>
                       <span style={{ marginLeft: -10 }}>Sub</span>
                       <span style={{ marginLeft: -30 }}>Preço</span>
