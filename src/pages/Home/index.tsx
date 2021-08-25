@@ -70,11 +70,7 @@ interface ProductFormData {
 const Home: React.FC = () => {
   const { signOut, user } = useAuth();
   const [query, setQuery] = useState<string>();
-<<<<<<< HEAD
   const [familyQuery, setFamilyQuery] = useState<string>();
-=======
-  const [familyQuery, setFamilyQuery] = useState<string>();
->>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
   const { addToast } = useToast();
   const [products, setProducts] = useState<ProductFormData[]>();
   const [selected, setSelected] = useState<ProductFormData[]>();
@@ -312,22 +308,18 @@ const Home: React.FC = () => {
       </Header>
 
       <Content>
-<<<<<<< HEAD
         <p style={{ color: '#999', paddingLeft: 650, paddingTop: 3 }}>
           Pesquisar Produto
         </p>
-=======
-      <p style={{ color: '#999', paddingLeft: 650, paddingTop: 3 }}>Pesquisar Produto</p>
->>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
         <SearchBox>
           <InputSearch
             name="query"
             type="text"
             value={query}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setQuery(e.currentTarget.value)}
+              setQuery(e.currentTarget.value)
+            }
           />
-<<<<<<< HEAD
           <SearchButton
             type="submit"
             onClick={search}
@@ -335,11 +327,6 @@ const Home: React.FC = () => {
               setQuery(e.currentTarget.value);
             }}
           >
-=======
-          <SearchButton type="submit" onClick={search} onChange={(e) => {
-            setQuery(e.currentTarget.value);
-          }}>
->>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
             <FiSearch />
           </SearchButton>
         </SearchBox>
@@ -351,8 +338,8 @@ const Home: React.FC = () => {
             name="family"
             value={familyQuery}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-<<<<<<< HEAD
-              setFamilyQuery(e.currentTarget.value)}
+              setFamilyQuery(e.currentTarget.value)
+            }
           />
           <SearchButton
             type="submit"
@@ -361,12 +348,6 @@ const Home: React.FC = () => {
               setFamilyQuery(e.currentTarget.value);
             }}
           >
-=======
-              setFamilyQuery(e.currentTarget.value)} />
-            <SearchButton type="submit" onClick={searchFamily} onChange={(e) => {
-              setFamilyQuery(e.currentTarget.value);
-            }}>
->>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
             <FiSearch />
           </SearchButton>
         </SearchBox>
@@ -449,7 +430,8 @@ const Home: React.FC = () => {
                       <input
                         defaultValue={prod.sales_price}
                         onChange={(e) =>
-                          handleChangedSalesPrice(e, prod, index)}
+                          handleChangedSalesPrice(e, prod, index)
+                        }
                       />
                       <input
                         defaultValue={prod.amount}
