@@ -1027,9 +1027,15 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.12.5", "@babel/runtime@^7.6.2":
+<<<<<<< HEAD
   version "7.14.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.6.tgz#535203bc0892efc7dec60bdc27b2ecf6e409062d"
   integrity sha512-/PCB2uJ7oM44tz8YhC4Z/6PeOKXp4K588f+5M3clr1M4zbqztlo0XEfJ2LEzj/FgwfgGcIdl8n7YYjTCI0BYwg==
+=======
+  version "7.14.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.0.tgz#46794bc20b612c5f75e62dd071e24dfd95f1cbe6"
+  integrity sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==
+>>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
   dependencies:
     regenerator-runtime "^0.13.4"
 
@@ -2826,6 +2832,7 @@ braces@~3.0.2:
     fill-range "^7.0.1"
 
 broadcast-channel@^3.4.1:
+<<<<<<< HEAD
   version "3.7.0"
   resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-3.7.0.tgz#2dfa5c7b4289547ac3f6705f9c00af8723889937"
   integrity sha512-cIAKJXAxGJceNZGTZSBzMxzyOn72cVgPnKx4dc6LRjQgbaJUQqhy5rzL3zbMxkMWsGKkv2hSFkPRMEXfoMZ2Mg==
@@ -2836,6 +2843,17 @@ broadcast-channel@^3.4.1:
     microseconds "0.2.0"
     nano-time "1.0.0"
     oblivious-set "1.0.0"
+=======
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/broadcast-channel/-/broadcast-channel-3.5.3.tgz#c75c39d923ae8af6284a893bfdc8bd3996d2dd2d"
+  integrity sha512-OLOXfwReZa2AAAh9yOUyiALB3YxBe0QpThwwuyRHLgpl8bSznSDmV6Mz7LeBJg1VZsMcDcNMy7B53w12qHrIhQ==
+  dependencies:
+    "@babel/runtime" "^7.7.2"
+    detect-node "^2.0.4"
+    js-sha3 "0.8.0"
+    microseconds "0.2.0"
+    nano-time "1.0.0"
+>>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
     rimraf "3.0.2"
     unload "2.2.0"
 
@@ -9552,10 +9570,17 @@ react-perfect-scrollbar@^1.5.8:
     perfect-scrollbar "^1.5.0"
     prop-types "^15.6.1"
 
+<<<<<<< HEAD
 react-query@^3.18.1:
   version "3.18.1"
   resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.18.1.tgz#893b5475a7b4add099e007105317446f7a2cd310"
   integrity sha512-17lv3pQxU9n+cB5acUv0/cxNTjo9q8G+RsedC6Ax4V9D8xEM7Q5xf9xAbCPdEhDrrnzPjTls9fQEABKRSi7OJA==
+=======
+react-query@^3.15.2:
+  version "3.15.2"
+  resolved "https://registry.yarnpkg.com/react-query/-/react-query-3.15.2.tgz#4ff4ffe9ff5e3bf002a7e863cc01b9d58c5fae01"
+  integrity sha512-7pm/WR+zl064W0pfQffayM0Jmgsz2VcoDL0pRFk06ERpMSYLQjX0fFZfvVRIgJVRjgS3A04pSY1iOYdw92dzdA==
+>>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
   dependencies:
     "@babel/runtime" "^7.5.5"
     broadcast-channel "^3.4.1"

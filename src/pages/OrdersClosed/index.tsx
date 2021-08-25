@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { format } from 'date-fns';
 
 import { MdChevronLeft } from 'react-icons/md';
+import { FiSearch } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 import api from '../../services/api';
@@ -9,6 +10,9 @@ import api from '../../services/api';
 import {
   Container,
   Header,
+  SearchBox,
+  SearchButton,
+  InputSearch,
   OrderList,
   Order,
   OrderDetail,
@@ -50,31 +54,58 @@ export interface OrderProps {
 }
 
 const OrdersClosed: React.FC = () => {
+  const [deliveryMobile, setDeliveryMobile] = useState<string>();
   const [orders, setOrders] = useState<OrderProps[]>([]);
 
   const token = localStorage.getItem('@Massas:token');
 
-  useEffect(() => {
-    async function loadOrders() {
-      const response = await api.get('ordersclosed', {
+  const loadOrders = useCallback(async () => {
+      await api.get('ordersclosed', {
         headers: { Authorization: `Bearer ${token}` },
+      }).then((response) => {
+        const ordersFormatted = response.data.map((order: any) => {
+          return {
+            ...(order as Object),
+            paymentMethod: order.payment_method !== 1 ? 'Cartão' : 'Dinheiro',
+            delivery_date: format(new Date(order.delivery_date), 'dd/MM/yyyy'),
+            order_total: Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+            }).format(order.order_total.replace('$', '')),
+          };
+        });
+        setOrders(ordersFormatted);
       });
-
-      const ordersFormatted = await response.data.map((order: any) => {
-        return {
-          ...(order as Object),
-          paymentMethod: order.payment_method !== 1 ? 'Cartão' : 'Dinheiro',
-          delivery_date: format(new Date(order.delivery_date), 'dd/MM/yyyy'),
-          order_total: Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-          }).format(order.order_total.replace('$', '')),
-        };
-      });
-      setOrders(ordersFormatted);
-    }
-    loadOrders();
   }, [token]);
+
+  useEffect(() => {
+    loadOrders();
+  }, [loadOrders]);
+
+  const searchMobile = useCallback(async () => {
+    if (!deliveryMobile) {
+      loadOrders();
+    } else {
+      if (token) {
+        api.get(`ordersclosed/mobile/${deliveryMobile}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        }).then((response) => {
+          const ordersFormatted = response.data.map((order: any) => {
+            return {
+              ...(order as Object),
+              paymentMethod: order.payment_method !== 1 ? 'Cartão' : 'Dinheiro',
+              delivery_date: format(new Date(order.delivery_date), 'dd/MM/yyyy'),
+              order_total: Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(order.order_total.replace('$', '')),
+            };
+          });
+          setOrders(ordersFormatted);
+        });
+      }
+    }
+  }, [deliveryMobile, token, loadOrders]);
 
   return (
     <Container>
@@ -92,6 +123,21 @@ const OrdersClosed: React.FC = () => {
             📦
           </span>
         </Label>
+        <p style={{ color: '#999', paddingLeft: 800, paddingTop: 3 }}>Pesquisar por contato</p>
+        <SearchBox>
+          <InputSearch
+            name="deliveryMobile"
+            type="text"
+            value={deliveryMobile}
+            onChange={(e: React.FormEvent<HTMLInputElement>) =>
+              setDeliveryMobile(e.currentTarget.value)}
+          />
+          <SearchButton type="submit" onClick={searchMobile} onChange={(e) => {
+            setDeliveryMobile(e.currentTarget.value);
+          }}>
+            <FiSearch />
+          </SearchButton>
+        </SearchBox>
       </Header>
       <OrderList>
         {orders &&

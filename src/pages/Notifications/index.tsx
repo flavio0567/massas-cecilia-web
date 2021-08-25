@@ -89,7 +89,7 @@ const Notifications: React.FC = () => {
         </Scroll>
       </NotificationList>
     </Container>
-  );
+  )
 };
 
 export default Notifications;

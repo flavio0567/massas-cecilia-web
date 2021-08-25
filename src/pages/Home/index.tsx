@@ -70,7 +70,11 @@ interface ProductFormData {
 const Home: React.FC = () => {
   const { signOut, user } = useAuth();
   const [query, setQuery] = useState<string>();
+<<<<<<< HEAD
   const [familyQuery, setFamilyQuery] = useState<string>();
+=======
+  const [familyQuery, setFamilyQuery] = useState<string>(); 
+>>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
   const { addToast } = useToast();
   const [products, setProducts] = useState<ProductFormData[]>();
   const [selected, setSelected] = useState<ProductFormData[]>();
@@ -78,7 +82,7 @@ const Home: React.FC = () => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(0);
   const token = localStorage.getItem('@Massas:token');
-
+ 
   const loadProducts = useCallback(async () => {
     await api.get('/products', { params: { page, limit } }).then((response) => {
       setContentLength(response.data.product[1]);
@@ -121,12 +125,18 @@ const Home: React.FC = () => {
     if (!familyQuery) {
       loadProducts();
     } else {
+<<<<<<< HEAD
       const newSelection = await api.get(
         `products/all-in-family/${familyQuery}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
+=======
+      const newSelection = await api.get(`products/all-in-family/${familyQuery}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+>>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
       setSelected(newSelection.data);
       setProducts(newSelection.data);
     }
@@ -308,9 +318,13 @@ const Home: React.FC = () => {
       </Header>
 
       <Content>
+<<<<<<< HEAD
         <p style={{ color: '#999', paddingLeft: 650, paddingTop: 3 }}>
           Pesquisar Produto
         </p>
+=======
+      <p style={{ color: '#999', paddingLeft: 650, paddingTop: 3 }}>Pesquisar Produto</p>
+>>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
         <SearchBox>
           <InputSearch
             name="query"
@@ -319,6 +333,7 @@ const Home: React.FC = () => {
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setQuery(e.currentTarget.value)}
           />
+<<<<<<< HEAD
           <SearchButton
             type="submit"
             onClick={search}
@@ -326,6 +341,11 @@ const Home: React.FC = () => {
               setQuery(e.currentTarget.value);
             }}
           >
+=======
+          <SearchButton type="submit" onClick={search} onChange={(e) => {
+            setQuery(e.currentTarget.value);
+          }}>
+>>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
             <FiSearch />
           </SearchButton>
         </SearchBox>
@@ -337,6 +357,7 @@ const Home: React.FC = () => {
             name="family"
             value={familyQuery}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
+<<<<<<< HEAD
               setFamilyQuery(e.currentTarget.value)}
           />
           <SearchButton
@@ -346,6 +367,12 @@ const Home: React.FC = () => {
               setFamilyQuery(e.currentTarget.value);
             }}
           >
+=======
+              setFamilyQuery(e.currentTarget.value)} />
+            <SearchButton type="submit" onClick={searchFamily} onChange={(e) => {
+              setFamilyQuery(e.currentTarget.value);
+            }}>
+>>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
             <FiSearch />
           </SearchButton>
         </SearchBox>
