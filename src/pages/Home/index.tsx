@@ -73,7 +73,7 @@ const Home: React.FC = () => {
 <<<<<<< HEAD
   const [familyQuery, setFamilyQuery] = useState<string>();
 =======
-  const [familyQuery, setFamilyQuery] = useState<string>(); 
+  const [familyQuery, setFamilyQuery] = useState<string>();
 >>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
   const { addToast } = useToast();
   const [products, setProducts] = useState<ProductFormData[]>();
@@ -82,7 +82,7 @@ const Home: React.FC = () => {
   const [page, setPage] = useState(0);
   const [limit, setLimit] = useState(0);
   const token = localStorage.getItem('@Massas:token');
- 
+
   const loadProducts = useCallback(async () => {
     await api.get('/products', { params: { page, limit } }).then((response) => {
       setContentLength(response.data.product[1]);
@@ -125,18 +125,12 @@ const Home: React.FC = () => {
     if (!familyQuery) {
       loadProducts();
     } else {
-<<<<<<< HEAD
       const newSelection = await api.get(
         `products/all-in-family/${familyQuery}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         },
       );
-=======
-      const newSelection = await api.get(`products/all-in-family/${familyQuery}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
->>>>>>> 76fda6cee45cda6e251ccbde4c858a99387ae547
       setSelected(newSelection.data);
       setProducts(newSelection.data);
     }
