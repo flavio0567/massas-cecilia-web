@@ -89,7 +89,7 @@ const OrdersClosed: React.FC = () => {
         <Label style={{ marginLeft: 60, fontSize: 30 }}>
           Pedidos Fechados{' '}
           <span role="img" aria-label="order">
-            👍
+            📦
           </span>
         </Label>
       </Header>

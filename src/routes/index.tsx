@@ -13,6 +13,8 @@ import Order from '../pages/Orders';
 import OrderEdit from '../pages/OrderEdit';
 import OrderClosed from '../pages/OrdersClosed';
 import Users from '../pages/Users';
+import TimeFrame from '../pages/TimeFrame';
+import { TimeFramesProvider } from '../hooks/useTimeFrames';
 
 const Routes: React.FC = () => (
   <Switch>
@@ -27,6 +29,9 @@ const Routes: React.FC = () => (
     <Route path="/orderedit" component={OrderEdit} isPrivate />
     <Route path="/ordersclosed" component={OrderClosed} isPrivate />
     <Route path="/users" component={Users} isPrivate />
+    <TimeFramesProvider>
+      <Route path="/timeframe" component={TimeFrame} isPrivate />
+    </TimeFramesProvider>
   </Switch>
 );
 

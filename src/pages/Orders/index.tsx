@@ -128,7 +128,7 @@ const Orders: React.FC = () => {
         <Label style={{ marginLeft: 60, fontSize: 30 }}>
           Pedidos Abertos{' '}
           <span role="img" aria-label="order">
-            🍝
+            🛒
           </span>
         </Label>
       </Header>

@@ -83,6 +83,44 @@ export const Content = styled.main`
   }
 `;
 
+export const Orders = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    font-size: 22px;
+  }
+`;
+
+export const OrdersLabel = styled.div`
+  display: flex;
+  h1 {
+    margin-left: 12px;
+  }
+`;
+
+export const OrdersLinks = styled.div`
+  display: flex;
+
+  span {
+    font-size: 16px;
+  }
+`;
+
+export const TimeFrame = styled.div`
+  margin-left: 55px;
+
+  span {
+    font-size: 18px;
+  }
+`;
+
+export const TimeFrameLabel = styled.div`
+  display: flex;
+`;
+
 export const SearchBox = styled.div`
   margin: 20px 20px 0 860px;
 
@@ -197,7 +235,7 @@ export const Products = styled.div`
 `;
 
 export const AvatarInfo = styled.div`
-  position: relative;
+  /* position: relative; */
 
   label {
     position: absolute;

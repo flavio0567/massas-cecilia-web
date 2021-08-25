@@ -1,9 +1,12 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 
-export const Container = styled.div``;
+export const Container = styled.div`
+  margin-top: 1rem;
+`;
 
 export const Header = styled.div`
+  display: inline-flex;
   padding: 0 5px;
 `;
 
@@ -74,7 +77,10 @@ export const Label = styled.h1`
   color: #d85d10;
   font-family: 'RobotoSlab-Medium';
   font-size: 20px;
-  /* font-weight: bold; */
+
+  span {
+    margin-left: 22px;
+  }
 `;
 
 export const ButtonSection = styled.div`
