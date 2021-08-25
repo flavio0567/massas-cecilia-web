@@ -132,6 +132,7 @@ const Orders: React.FC = () => {
           </span>
         </Label>
       </Header>
+
       <OrderList>
         {orders &&
           orders.map((order: OrderProps) => (

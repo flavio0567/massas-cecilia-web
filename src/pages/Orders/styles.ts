@@ -70,6 +70,7 @@ export const Order = styled.div`
     color: ${lighten(0.2, '#7159c1')};
     margin: 0 45px;
   }
+
 `;
 
 export const OrderDetail = styled.div`
