@@ -60,9 +60,11 @@ const OrdersClosed: React.FC = () => {
   const token = localStorage.getItem('@Massas:token');
 
   const loadOrders = useCallback(async () => {
-      await api.get('ordersclosed', {
+    await api
+      .get('ordersclosed', {
         headers: { Authorization: `Bearer ${token}` },
-      }).then((response) => {
+      })
+      .then((response) => {
         const ordersFormatted = response.data.map((order: any) => {
           return {
             ...(order as Object),
@@ -85,16 +87,20 @@ const OrdersClosed: React.FC = () => {
   const searchMobile = useCallback(async () => {
     if (!deliveryMobile) {
       loadOrders();
-    } else {
-      if (token) {
-        api.get(`ordersclosed/mobile/${deliveryMobile}`, {
+    } else if (token) {
+      api
+        .get(`ordersclosed/mobile/${deliveryMobile}`, {
           headers: { Authorization: `Bearer ${token}` },
-        }).then((response) => {
+        })
+        .then((response) => {
           const ordersFormatted = response.data.map((order: any) => {
             return {
               ...(order as Object),
               paymentMethod: order.payment_method !== 1 ? 'Cartão' : 'Dinheiro',
-              delivery_date: format(new Date(order.delivery_date), 'dd/MM/yyyy'),
+              delivery_date: format(
+                new Date(order.delivery_date),
+                'dd/MM/yyyy',
+              ),
               order_total: Intl.NumberFormat('pt-BR', {
                 style: 'currency',
                 currency: 'BRL',
@@ -103,7 +109,6 @@ const OrdersClosed: React.FC = () => {
           });
           setOrders(ordersFormatted);
         });
-      }
     }
   }, [deliveryMobile, token, loadOrders]);
 
@@ -117,28 +122,33 @@ const OrdersClosed: React.FC = () => {
         >
           <MdChevronLeft size={36} color="#ff9000" />
         </Link>
+
         <Label style={{ marginLeft: 60, fontSize: 30 }}>
           Pedidos Fechados{' '}
           <span role="img" aria-label="order">
             📦
           </span>
         </Label>
-        <p style={{ color: '#999', paddingLeft: 800, paddingTop: 3 }}>Pesquisar por contato</p>
         <SearchBox>
           <InputSearch
-            name="deliveryMobile"
+            name="query"
             type="text"
             value={deliveryMobile}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
               setDeliveryMobile(e.currentTarget.value)}
           />
-          <SearchButton type="submit" onClick={searchMobile} onChange={(e) => {
-            setDeliveryMobile(e.currentTarget.value);
-          }}>
+          <SearchButton
+            type="submit"
+            onClick={searchMobile}
+            onChange={(e) => {
+              setDeliveryMobile(e.currentTarget.value);
+            }}
+          >
             <FiSearch />
           </SearchButton>
         </SearchBox>
       </Header>
+      <p style={{ color: '#999', paddingLeft: 660 }}>Pesquisar por contato</p>
       <OrderList>
         {orders &&
           orders.map((order: OrderProps) => (

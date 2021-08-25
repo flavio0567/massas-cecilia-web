@@ -10,19 +10,20 @@ export const Header = styled.div`
   padding: 0 5px;
 `;
 
-
 export const SearchBox = styled.div`
-  margin: 20px 20px 0 860px;
+  margin: 20px 0 0 320px;
 
   transform: translate(-50%, -50%);
   background: #ffe5b4;
   height: 40px;
   border-radius: 40px;
   padding: 10px;
+
   &:hover > input {
     width: 240px;
     padding: 0 6px;
   }
+
   &:hover > button {
     background: #f4ede8;
   }

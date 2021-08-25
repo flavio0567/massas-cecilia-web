@@ -10,9 +10,6 @@ import {
   FiCheckSquare,
 } from 'react-icons/fi';
 
-import { FixedSizeList } from 'react-window';
-import AutoSizer from 'react-virtualized-auto-sizer';
-
 import { Link } from 'react-router-dom';
 import {
   MdChevronLeft,
@@ -317,8 +314,7 @@ const Home: React.FC = () => {
             type="text"
             value={query}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setQuery(e.currentTarget.value)
-            }
+              setQuery(e.currentTarget.value)}
           />
           <SearchButton
             type="submit"
@@ -338,8 +334,7 @@ const Home: React.FC = () => {
             name="family"
             value={familyQuery}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setFamilyQuery(e.currentTarget.value)
-            }
+              setFamilyQuery(e.currentTarget.value)}
           />
           <SearchButton
             type="submit"
@@ -430,8 +425,7 @@ const Home: React.FC = () => {
                       <input
                         defaultValue={prod.sales_price}
                         onChange={(e) =>
-                          handleChangedSalesPrice(e, prod, index)
-                        }
+                          handleChangedSalesPrice(e, prod, index)}
                       />
                       <input
                         defaultValue={prod.amount}
