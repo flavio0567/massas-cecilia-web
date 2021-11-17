@@ -3,6 +3,8 @@ import React, { useCallback, useState, useMemo, useEffect } from 'react';
 import { MdNotifications } from 'react-icons/md';
 import { parseISO, formatDistance } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import useSound from 'use-sound';
+import boopNotification from '../../assets/boop.mp3';
 
 import api from '../../services/api';
 
@@ -27,23 +29,32 @@ const Notifications: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [notifications, setNotifications] = useState<NotificationProps[]>([]);
 
-  useEffect(() => {
-    async function loadNotifications() {
-      const response = await api.get('notifications');
+  const [isChecked, setIsChecked] = useState(false);
+  const [playActive] = useSound(boopNotification, { volume: 0.5 });
 
-      const data = response.data.map((notification: NotificationProps) => ({
-        ...notification,
-        timeDistance: formatDistance(
-          parseISO(notification.created_at),
-          new Date(),
-          { addSuffix: true, locale: ptBR },
-        ),
-      }));
+  const loadNotifications = useCallback(async () => {
+    const response = await api.get('notifications');
 
-      setNotifications(data);
-    }
-    loadNotifications();
+    const data = response.data.map((notification: NotificationProps) => ({
+      ...notification,
+      timeDistance: formatDistance(
+        parseISO(notification.created_at),
+        new Date(),
+        { addSuffix: true, locale: ptBR },
+      ),
+    }));
+    setNotifications(data);
   }, []);
+
+  useEffect(() => {
+    loadNotifications();
+  }, [loadNotifications]);
+
+  // useEffect(() => {
+  //   if (visible) {
+  //     setInterval(loadNotifications(), 1000);
+  //   }
+  // }, [loadNotifications, visible]);
 
   const hasUnread = useMemo(
     () => !!notifications.find((notification) => notification.read === false),
@@ -52,7 +63,10 @@ const Notifications: React.FC = () => {
 
   const handleToggleVisible = useCallback(() => {
     setVisible(!visible);
-  }, [setVisible, visible]);
+    notifications.map((notification) =>
+      notification.read === false ? setIsChecked(true) : setIsChecked(false),
+    );
+  }, [setVisible, visible, notifications]);
 
   async function handleMarkAsRead(id: any) {
     await api.patch(`notifications/${id}`, { read: true });
@@ -63,6 +77,20 @@ const Notifications: React.FC = () => {
 
     setNotifications(updateNotification);
   }
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      loadNotifications();
+
+      if (hasUnread) {
+        playActive();
+      }
+    }, 2000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [isChecked, notifications, playActive, loadNotifications, hasUnread]);
 
   return (
     <Container>
@@ -89,7 +117,7 @@ const Notifications: React.FC = () => {
         </Scroll>
       </NotificationList>
     </Container>
-  )
+  );
 };
 
 export default Notifications;

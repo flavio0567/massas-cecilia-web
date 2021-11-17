@@ -82,10 +82,6 @@ const Home: React.FC = () => {
       const productsFormatted = response.data.product[0].map((product: any) => {
         return {
           ...(product as Object),
-          // priceFormatted: Intl.NumberFormat('pt-BR', {
-          //   style: 'currency',
-          //   currency: 'BRL',
-          // }).format(product.sales_price),
         };
       });
       setSelected(productsFormatted);
@@ -95,13 +91,9 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     loadProducts();
-    // setLimit(contentLength);
   }, [loadProducts, page, limit, contentLength]);
 
   const search = useCallback(async () => {
-    // const newSelection = products?.filter(
-    //   (prod: any) => prod.name.toLowerCase().indexOf(query) > -1,
-    // );
     if (!query) {
       loadProducts();
     } else {
@@ -314,7 +306,8 @@ const Home: React.FC = () => {
             type="text"
             value={query}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setQuery(e.currentTarget.value)}
+              setQuery(e.currentTarget.value)
+            }
           />
           <SearchButton
             type="submit"
@@ -334,7 +327,8 @@ const Home: React.FC = () => {
             name="family"
             value={familyQuery}
             onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              setFamilyQuery(e.currentTarget.value)}
+              setFamilyQuery(e.currentTarget.value)
+            }
           />
           <SearchButton
             type="submit"
@@ -425,7 +419,8 @@ const Home: React.FC = () => {
                       <input
                         defaultValue={prod.sales_price}
                         onChange={(e) =>
-                          handleChangedSalesPrice(e, prod, index)}
+                          handleChangedSalesPrice(e, prod, index)
+                        }
                       />
                       <input
                         defaultValue={prod.amount}

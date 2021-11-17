@@ -32,32 +32,38 @@ const SignIn: React.FC = () => {
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
+      let isMounted = true;
       try {
-        setLoading(true);
+        if (isMounted) {
+          setLoading(true);
 
-        formRef.current?.setErrors({});
+          formRef.current?.setErrors({});
 
-        const schema = Yup.object().shape({
-          mobile: Yup.string().min(10, 'Informe o número do celular com ddd.'),
-          password: Yup.string().min(
-            6,
-            'Senha obrigatória, mínimo 6 caracteres.',
-          ),
-        });
+          const schema = Yup.object().shape({
+            mobile: Yup.string().min(
+              10,
+              'Informe o número do celular com ddd.',
+            ),
+            password: Yup.string().min(
+              6,
+              'Senha obrigatória, mínimo 6 caracteres.',
+            ),
+          });
 
-        await schema.validate(data, {
-          abortEarly: false,
-        });
+          await schema.validate(data, {
+            abortEarly: false,
+          });
 
-        await signIn({
-          mobile: data.mobile,
-          password: data.password,
-        });
+          await signIn({
+            mobile: data.mobile,
+            password: data.password,
+          });
 
-        const token = localStorage.getItem('@Massas:token');
+          const token = localStorage.getItem('@Massas:token');
 
-        if (!token) {
-          throw new Error('Error from api.');
+          if (!token) {
+            throw new Error('Error from api.');
+          }
         }
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
@@ -72,8 +78,13 @@ const SignIn: React.FC = () => {
           description: 'Ocorreu erro ao fazer logon, cheque suas credenciais.',
         });
       } finally {
-        setLoading(false);
+        if (isMounted) {
+          setLoading(false);
+        }
       }
+      return () => {
+        isMounted = false;
+      };
     },
     [signIn, addToast],
   );
